@@ -11,12 +11,9 @@ export class CharacterResolverService {
 
   private readonly DEFAULT_CHARACTER_UID = 1;
 
-  private _characterData$ = new Subject<Character>();
-  public characterData$ = this._characterData$.asObservable();
-
   constructor(private dataService: DataService) { }
 
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+  resolve(route: ActivatedRouteSnapshot) {
 
     const uid = route.params['uid'];
 
@@ -26,8 +23,7 @@ export class CharacterResolverService {
     }
 
     return this.dataService.fetchCharacter(uid ? +uid : this.DEFAULT_CHARACTER_UID).pipe(
-      tap((data: Character) => localStorage.setItem(uid, JSON.stringify(data))),
-      tap((data: Character) => this._characterData$.next(data))
+      tap((data: Character) => localStorage.setItem(uid, JSON.stringify(data)))
     )
   }
 }

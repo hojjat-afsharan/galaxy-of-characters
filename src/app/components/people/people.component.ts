@@ -15,6 +15,7 @@ import { PeopleResolverService } from "src/app/services/people-resolver.service"
 export class PeopleComponent {
   public people$ = new Observable<People[]>();
   public state?: State;
+  isLoading = false
 
   constructor(
     private route: ActivatedRoute,
@@ -29,7 +30,7 @@ export class PeopleComponent {
   }
 
   public navigate(whichDirection: number) {
-
+    this.isLoading = true;
     this.stateService.updateState({
       currentPage: (this.state?.currentPage ?? 1) + whichDirection
     });
@@ -37,7 +38,8 @@ export class PeopleComponent {
     this.router.navigate([], { 
       queryParams: {page: this.state?.currentPage, limit: this.state?.pageLimit},
       relativeTo: this.route,
-      });
+      
+      }).finally(() => this.isLoading = false);
   }
 
   public updateSelectedCharacter(uid: number) {

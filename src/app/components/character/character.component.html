@@ -1,1 +1,5 @@
 {{character$ | async | json}}
+
+
+<button [disabled]="isLoading" (click)="navigate(-1)">Previous page</button>
+<button [disabled]="isLoading" (click)="navigate(1)">Next page</button>
