@@ -16,10 +16,8 @@ export class CharacterComponent {
 
   ngOnInit() {
     this.character$ = (this.route.data).pipe(
-      tap(item => console.log(item)),
       map(({data}) => data),
-      map((data: Character) => data.properties? data.properties : null),
-      tap(item => console.log(item))
+      map((data: Character) => data.properties? data.properties : null)
     );
   }
 }

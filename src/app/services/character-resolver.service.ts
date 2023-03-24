@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { ActivatedRoute, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { BehaviorSubject, of, tap } from 'rxjs';
 import { Character } from '../models/character.model';
 import { DataService } from './data.service';
@@ -18,9 +18,10 @@ export class CharacterResolverService {
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
 
-    const uid = route.queryParamMap.get('uid');
+    const uid = route.params['uid'];
 
     if (!!this._characterData$.value) {
+      console.log(uid);
       return this.dataService.fetchCharacter(uid ? +uid : this.DEFAULT_CHARACTER_UID).pipe(
         tap((data: Character) => console.log('DataResolver: Fetched data from API:', data)),
         tap((data: Character) => this._characterData$.next(data))
