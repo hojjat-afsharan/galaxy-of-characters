@@ -17,4 +17,11 @@ export class StateService {
     const nextState = { ...currentState, ...newState };
     this._state$.next(nextState);
   }
+
+  public updateKnownUids(newUids: number[]) {
+    const currentState = this._state$.getValue();
+    currentState.uidList = [...currentState.uidList, ...newUids].sort((a, b) => a > b ? 1:-1);
+    const nextState = { ...currentState };
+    this._state$.next(nextState);
+  }
 }

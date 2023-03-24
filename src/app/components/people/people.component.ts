@@ -22,7 +22,9 @@ export class PeopleComponent {
     private router: Router,
     private stateService: StateService
   ) {
-    this.stateService.state$.subscribe((state: State) => (this.state = state));
+    this.stateService.state$.subscribe((state: State) => 
+    {this.state = state;
+    console.log(state)});
   }
 
   ngOnInit() {

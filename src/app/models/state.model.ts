@@ -6,6 +6,7 @@ export interface State {
   currentPage: number;
   pageLimit: number;
   currentSelectedCharacter: number;
+  uidList: number[];
 }
 
 export const STATE_INITIAL_VALUE: State = {
@@ -15,5 +16,6 @@ export const STATE_INITIAL_VALUE: State = {
   next: null,
   currentPage: 1,
   pageLimit: 1,
-  currentSelectedCharacter: 1
+  currentSelectedCharacter: 1,
+  uidList: []
 };
