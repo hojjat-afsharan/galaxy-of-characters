@@ -21,10 +21,16 @@ export class PeopleResolverService implements Resolve<People[]> {
 
     const page = route.queryParamMap.get('page');
     const limit = route.queryParamMap.get('limit');
+    const cacheId = `page ${page ? + page: this.DEFAULT_PAGE} - limit ${limit ? +limit : this.DEFAULT_PAGE_LIMIT}`;
+
+    const cachedResponse = localStorage.getItem(cacheId);
+    if (cachedResponse) {
+      return of(JSON.parse(cachedResponse));
+    }
 
     if (!!this._peopleData$.value) {
       return this.dataService.fetchPeople((page ? + page: this.DEFAULT_PAGE), limit ? +limit : this.DEFAULT_PAGE_LIMIT).pipe(
-        tap((data: People[]) => console.log('DataResolver: Fetched data from API:', data)),
+        tap((data: People[]) => localStorage.setItem(cacheId, JSON.stringify(data))),
         tap((data: People[]) => this._peopleData$.next(data))
       )
     } else {
