@@ -19,7 +19,7 @@ export class CharacterComponent {
   constructor(private route: ActivatedRoute,
     private router: Router,
     private stateService: StateService) {
-      this.stateService.state$.subscribe((state: State) => (this.state = state));
+      this.stateService.state$.subscribe((state: State) => this.state = state);
     }
 
   ngOnInit() {
@@ -36,8 +36,6 @@ export class CharacterComponent {
       currentSelectedCharacter: (this.state?.currentSelectedCharacter ?? 1) + whichDirection
     });
 
-    console.log(this.state);
-
     this.router.navigate(['/people', this.state?.currentSelectedCharacter]).finally(() => this.isLoading = false)
   }
 
@@ -46,4 +44,14 @@ export class CharacterComponent {
       currentSelectedCharacter: uid
     })
   }
+
+  gotoList() {
+    this.isLoading = true;
+
+    console.log(this.state);
+    this.router.navigate(['/people'], { 
+      queryParams: {page: this.state?.currentPage, limit: this.state?.pageLimit}
+      
+      }).finally(() => this.isLoading = false);
+    }
 }

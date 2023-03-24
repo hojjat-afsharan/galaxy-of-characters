@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { BehaviorSubject, of, ReplaySubject, Subject, tap } from 'rxjs';
+import { catchError, of, tap } from 'rxjs';
 import { Character } from '../models/character.model';
 import { DataService } from './data.service';
 
@@ -23,7 +23,11 @@ export class CharacterResolverService {
     }
 
     return this.dataService.fetchCharacter(uid ? +uid : this.DEFAULT_CHARACTER_UID).pipe(
-      tap((data: Character) => localStorage.setItem(uid, JSON.stringify(data)))
+      tap((data: Character) => localStorage.setItem(uid, JSON.stringify(data))),
+      catchError(error => {
+        console.log(error);
+        return error;
+      })
     )
   }
 }
