@@ -14,12 +14,11 @@ export class DataService implements OnDestroy {
   }
 
   constructor(private http: HttpClient) { 
-    this.fetchPeople(1, 10);
+    // this.fetchPeople(1, 10);
   }
 
-  public fetchPeople(pageSize: number, pageLimit: number) {
-     this.http.get<unknown>(this.ENDPOINTS.PEOPLE_LIST(pageSize, pageLimit))
-    .subscribe(data => console.log(data));
+  public fetchPeople(pageSize: number, pageLimit: number): Observable<unknown> {
+     return this.httpErrorHandler(this.http.get<unknown>(this.ENDPOINTS.PEOPLE_LIST(pageSize, pageLimit)));
   }
 
   private httpErrorHandler<T>(request: Observable<T>) {
@@ -31,12 +30,12 @@ export class DataService implements OnDestroy {
     )
   }
   handleHttpError(error: HttpErrorResponse) {
-    throw new Error('Method not implemented.');
+    // throw new Error('Method not implemented.');
   }
 
 
   ngOnDestroy(): void {
-    throw new Error('Method not implemented.');
+    // throw new Error('Method not implemented.');
   }
 
 }
