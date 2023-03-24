@@ -1,7 +1,8 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable, OnDestroy } from '@angular/core';
-import { catchError, map, Observable, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, map, Observable, shareReplay, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { Character, CharacterResponse } from '../models/character.model';
 import { People, PeopleResponse } from '../models/people.model';
 
 
@@ -11,17 +12,26 @@ import { People, PeopleResponse } from '../models/people.model';
 export class DataService implements OnDestroy {
 
   private readonly ENDPOINTS = {
-    PEOPLE_LIST: (pageNumber: number, pageLimit: number) => `${environment.starWarsUrl}/people?page=${pageNumber}&limit=${pageLimit}`
+    PEOPLE_LIST_URL: (pageNumber: number, pageLimit: number) => `${environment.starWarsUrl}/people?page=${pageNumber}&limit=${pageLimit}`,
+    CHARACTER_URL: (uid: number) => `${environment.starWarsUrl}/people/${uid}`
   }
 
   constructor(private http: HttpClient) {
-    // this.fetchPeople(1, 10);
   }
 
   public fetchPeople(pageSize: number, pageLimit: number): Observable<People[]> {
+      return this.httpErrorHandler(
+        this.http.get<PeopleResponse>(this.ENDPOINTS.PEOPLE_LIST_URL(pageSize, pageLimit)).pipe(
+          map((response: PeopleResponse) => response.results.map((item) => new People(item))),
+          shareReplay()
+        ));
+    
+  }
+
+  public fetchCharacter(uid: number): Observable<Character> {
     return this.httpErrorHandler(
-      this.http.get<PeopleResponse>(this.ENDPOINTS.PEOPLE_LIST(pageSize, pageLimit)).pipe(
-        map((response: PeopleResponse) => response.results.map((item) => new People(item)))
+      this.http.get<CharacterResponse>(this.ENDPOINTS.CHARACTER_URL(uid)).pipe(
+        map((response: CharacterResponse) => new Character(response.result))
       ));
   }
 
