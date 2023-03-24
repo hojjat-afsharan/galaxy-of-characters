@@ -6,12 +6,23 @@ import { CharacterResolverService } from './services/character-resolver.service'
 import { PeopleResolverService } from './services/people-resolver.service';
 
 const routes: Routes = [
+  // {
+  //   path: '',
+  //   component: PeopleComponent,
+  //   resolve: {
+  //     data: PeopleResolverService
+  //   }
+  // },
   {
     path: 'people',
     component: PeopleComponent,
+    data: {
+      queryParams: ['page', 'limit']
+    },
     resolve: {
       data: PeopleResolverService
-    }
+    },
+    runGuardsAndResolvers: 'always'
   },
   {
     path: 'people/:uid',
@@ -23,7 +34,9 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, {
+    onSameUrlNavigation: 'reload'
+  })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

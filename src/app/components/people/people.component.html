@@ -1,5 +1,8 @@
 <div *ngFor="let person of people$ | async">
-    <a [routerLink]="['/people', person.uid]">
+    <a [routerLink]="['/people', person.uid]" (click)="updateSelectedCharacter(+person.uid)">
     {{person.uid}} - {{person.name}} - {{person.url}}
     </a>
 </div>
+
+<button (click)="navigate(-1)">Previous page</button>
+<button (click)="navigate(1)">Next page</button>
