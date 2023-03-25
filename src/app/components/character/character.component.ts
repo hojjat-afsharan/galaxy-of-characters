@@ -50,7 +50,7 @@ export class CharacterComponent {
 
     console.log(this.state);
     this.router.navigate(['/people'], { 
-      queryParams: {page: this.state?.currentPage, limit: this.state?.pageLimit}
+      queryParams: {page: this.state?.currentPage, limit: this.state?.itemsLimit}
       
       }).finally(() => this.isLoading = false);
     }

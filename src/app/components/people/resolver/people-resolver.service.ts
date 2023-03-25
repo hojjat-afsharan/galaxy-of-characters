@@ -4,11 +4,8 @@ import {
   Resolve,
   RouterStateSnapshot,
 } from "@angular/router";
-import { BehaviorSubject, Observable, of, tap } from "rxjs";
-import { DataService } from "src/app/services/data.service";
-import { State } from "src/app/shared/state-manager/models/state.model";
-import { StateService } from "src/app/shared/state-manager/state.service";
 import { People } from "../models/people.model";
+import { PeopleService } from "../services/people.service";
 
 @Injectable({
   providedIn: "root",
@@ -16,43 +13,16 @@ import { People } from "../models/people.model";
 export class PeopleResolverService implements Resolve<People[]> {
   private readonly DEFAULT_PAGE = 1;
   private readonly DEFAULT_PAGE_LIMIT = 10;
-  private state?: State;
 
   constructor(
-    private dataService: DataService,
-    private readonly stateService: StateService
-  ) {
-    this.stateService.state$.subscribe((state) => this.state = state);
-  }
+    private peopleService: PeopleService
+  ) { }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
 
     const page = route.queryParams["page"];
     const limit = route.queryParams["limit"];
 
-    const pageNumber = page ? +page : this.DEFAULT_PAGE;
-    const limitNumber = limit ? +limit : this.DEFAULT_PAGE_LIMIT;
-
-    const cacheId = `page ${pageNumber} - limit ${limitNumber}`;
-    let uidList: number[] = [];
-
-    const cachedResponse = localStorage.getItem(cacheId);
-    this.stateService.updateState({
-      currentPage: pageNumber,
-      pageLimit: limitNumber,
-    });
-
-    if (cachedResponse) {
-      return of(JSON.parse(cachedResponse));
-    }
-    return this.dataService.fetchPeople(pageNumber, limitNumber).pipe(
-      tap((data: People[]) =>
-        localStorage.setItem(cacheId, JSON.stringify(data))
-      ),
-      tap((data: People[]) => {
-        data.forEach((people: People) => uidList.push(+people.uid));
-        this.stateService.updateKnownUids(uidList);
-      })
-    );
+    return this.peopleService.getPeople(page ? +page : this.DEFAULT_PAGE, limit ? +limit : this.DEFAULT_PAGE_LIMIT)
   }
 }

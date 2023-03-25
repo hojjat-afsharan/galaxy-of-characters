@@ -7,13 +7,11 @@ import { PeopleComponent } from "./components/people/people.component";
 import { PeopleResolverService } from "./components/people/resolver/people-resolver.service";
 
 const routes: Routes = [
-  // {
-  //   path: '',
-  //   component: PeopleComponent,
-  //   resolve: {
-  //     data: PeopleResolverService
-  //   }
-  // },
+  {
+    path: "",
+    redirectTo: "people",
+    pathMatch: "full",
+  },
   {
     path: "people",
     component: PeopleComponent,
@@ -31,9 +29,10 @@ const routes: Routes = [
     resolve: {
       data: CharacterResolverService,
     },
+    runGuardsAndResolvers: "always",
   },
-  { path: '404', component: PageNotFoundComponent },
-  { path: '**', redirectTo: '/404' }
+  { path: "404", component: PageNotFoundComponent },
+  { path: "**", redirectTo: "/404" },
 ];
 
 @NgModule({

@@ -11,8 +11,6 @@ import {
 } from "rxjs";
 import { environment } from "src/environments/environment";
 import { Character, CharacterResponse } from "../components/character/models/character.model";
-import { People, PeopleResponse } from "../components/people/models/people.model";
-import { StateService } from "../shared/state-manager/state.service";
 
 @Injectable({
   providedIn: "root",
@@ -25,41 +23,10 @@ export class DataService implements OnDestroy {
     CHARACTER_URL: (uid: number) => `${environment.starWarsUrl}/people/${uid}`,
   };
 
-  constructor(private http: HttpClient, private stateService: StateService) { }
+  constructor(private http: HttpClient) { }
 
-  public fetchPeople(
-    pageNumber: number,
-    pageLimit: number
-  ): Observable<People[]> {
-    console.log(pageNumber, pageLimit);
-    return this.httpErrorHandler(
-      this.http
-        .get<PeopleResponse>(
-          this.ENDPOINTS.PEOPLE_LIST_URL(pageNumber, pageLimit)
-        )
-        .pipe(
-          tap(
-            (response: PeopleResponse) =>
-              this.updateState(response, pageNumber, pageLimit)
-          ),
-          map((response: PeopleResponse) =>
-            response.results.map((item) => new People(item))
-          ),
-          tap(item => console.log(item))
-        )
-    );
-  }
 
-  updateState(response: PeopleResponse, pageNumber: number, pageLimit: number): void {
-    this.stateService.updateState({
-      totalRecords: response.total_records,
-      totalPages: response.total_pages,
-      previous: response.previous,
-      next: response.next,
-      currentPage: pageNumber,
-      pageLimit: pageLimit,
-    })
-  }
+
 
   public fetchCharacter(uid: number): Observable<Character> {
     return this.httpErrorHandler(
