@@ -18,9 +18,9 @@ const routes: Routes = [
     data: {
       queryParams: ["page", "limit"],
     },
-    resolve: {
-      data: PeopleResolverService,
-    },
+    // resolve: {
+    //   data: PeopleResolverService,
+    // },
     runGuardsAndResolvers: "always",
   },
   {

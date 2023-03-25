@@ -4,6 +4,7 @@ import {
   Resolve,
   RouterStateSnapshot,
 } from "@angular/router";
+import { of } from "rxjs";
 import { People } from "../models/people.model";
 import { PeopleService } from "../services/people.service";
 
@@ -23,6 +24,7 @@ export class PeopleResolverService implements Resolve<People[]> {
     const page = route.queryParams["page"];
     const limit = route.queryParams["limit"];
 
-    return this.peopleService.getPeople(page ? +page : this.DEFAULT_PAGE, limit ? +limit : this.DEFAULT_PAGE_LIMIT)
+    return of([]);
+    //  this.peopleService.getPeople(page ? +page : this.DEFAULT_PAGE, limit ? +limit : this.DEFAULT_PAGE_LIMIT)
   }
 }
