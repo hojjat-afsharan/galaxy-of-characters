@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot } from '@angular/router';
 import { BehaviorSubject, map, Observable, of, switchMap, tap } from 'rxjs';
-import { State } from 'src/app/shared/state-manager/models/state.model';
 import { StateService } from 'src/app/shared/state-manager/state.service';
 import { Character, CharacterResponse } from '../models/character.model';
 import { CharacterDataService } from './character-data.service';
@@ -18,16 +17,10 @@ export class CharacterService{
   private _character$ = new BehaviorSubject<Character>({});
   public cahracter$ = this._character$.asObservable();
 
-  private state?: State;
-
   constructor(private stateService: StateService,
     private characterDataService: CharacterDataService,
     private route: ActivatedRoute
-    ) { 
-      this.stateService.state$.subscribe((state) => this.state = state);
-    }
-
-
+    ) {}
 
     public getData(params: CharacterPageParams): Observable<Character> {
       console.log(params);

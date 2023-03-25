@@ -18,8 +18,6 @@ export class PeopleService {
 
   private _people$ = new BehaviorSubject<People[]>([]);
   public people$ = this._people$.asObservable();
-
-  private state: State = STATE_INITIAL_VALUE;
   
   constructor(
     private stateService: StateService,
@@ -27,33 +25,27 @@ export class PeopleService {
     private route: ActivatedRoute, private router: Router
   ) {
     this.getData();
-this.stateService.state$.subscribe((state) => this.state = state);
-
   }
 
   public getData() {
     this.route.queryParams.pipe(
       switchMap((params) => 
-           this.getPeople((params as PeoplePageParams).page, (params as PeoplePageParams).limit)
-        ),
+           this.getPeople((params as PeoplePageParams).page, (params as PeoplePageParams).limit)),
       tap((item: People[]) => this._people$.next(item)))
       .subscribe();
   }
 
   public getPeople(page: number = 1, limit: number = 10): Observable<People[]> {
-    const cacheId = `page ${page} - limit ${limit}`;
-
-    const cachedResponse = this.checkCachedData(cacheId);
 
     this.getCachedState();
 
+    const cacheId = `page ${page} - limit ${limit}`;
+    const cachedResponse = this.checkCachedData(cacheId);
     if (cachedResponse) {
-      this.stateService.updateState({
-        currentPage: page,
-        itemsLimit: limit,
-      });
       return of(JSON.parse(cachedResponse));
     }
+
+    
 
     return this.peopleDataService.fetchPeople(page, limit).pipe(
       tap((response: PeopleResponse) =>
@@ -69,11 +61,17 @@ this.stateService.state$.subscribe((state) => this.state = state);
       tap((item: People[]) => this._people$.next(item))
     );
   }
-  getCachedState() {
-    const maxValues = localStorage.getItem('maxValues');
-    if(maxValues) {
-      this.stateService.updateState(JSON.parse(maxValues) as State);
+
+  getCachedState(): boolean {
+    const initialValues = localStorage.getItem('maxValues');
+    const uidList = localStorage.getItem('uidList');
+    if(initialValues && uidList) {
+      console.log('7 - updating state');
+      this.stateService.updateState(JSON.parse(initialValues) as State);
+      this.stateService.updateState({uidList: JSON.parse(uidList? uidList : '{}')});
+      return true;
     }
+    return false;
   }
 
   checkCachedData(cacheId: string): string | null {
@@ -90,12 +88,13 @@ this.stateService.state$.subscribe((state) => this.state = state);
       totalRecords: response.total_records,
       totalPages: response.total_pages
     }
+    console.log('0-update state')
     this.stateService.updateState({
       totalRecords: response.total_records,
       totalPages: response.total_pages,
       previous: response.previous,
       next: response.next,
-      currentPage: pageNumber,
+      currentPage: +pageNumber,
       itemsLimit: pageLimit,
     });
 
@@ -106,8 +105,6 @@ this.stateService.state$.subscribe((state) => this.state = state);
     let uidList: number[] = [];
 
     people.forEach((people: People) => uidList.push(+people.uid));
-    const newState = Object.assign({...this.state}, {uidList});
-    this.stateService.updateKnownUids((newState as State).uidList, 
-    this.state);
+    this.stateService.updateKnownUids(uidList);
   }
 }

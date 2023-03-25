@@ -1,19 +1,22 @@
-import { Component } from "@angular/core";
+import { Component, OnDestroy } from "@angular/core";
 import { ActivatedRoute, Data } from "@angular/router";
 import { Router } from "@angular/router";
 import { StateService } from "src/app/shared/state-manager/state.service";
 import { State } from "src/app/shared/state-manager/models/state.model";
 import { PeopleService } from "./services/people.service";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: "app-people",
   templateUrl: "./people.component.html",
   styleUrls: ["./people.component.scss"],
 })
-export class PeopleComponent {
+export class PeopleComponent implements OnDestroy {
   public people$ = this.peopleService.people$;
   public state?: State;
   isLoading = false
+
+  private subscription = new Subscription();
 
   constructor(
     private route: ActivatedRoute,
@@ -21,9 +24,12 @@ export class PeopleComponent {
     private peopleService: PeopleService,
     private stateService: StateService
   ) {
-    this.stateService.state$.subscribe((state: State) => 
-    this.state = state);
+    this.subscription.add(this.stateService.state$.subscribe((state: State) => 
+    this.state = state));
 
+  }
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
   ngOnInit() {
@@ -32,6 +38,7 @@ export class PeopleComponent {
   public navigate(whichDirection: number) {
 
     this.isLoading = true;
+    console.log('3 - updating state');
     this.stateService.updateState({
       currentPage: +(this.state?.currentPage ?? 1) + whichDirection
     });
@@ -45,7 +52,9 @@ export class PeopleComponent {
   }
 
   public updateSelectedCharacter(uid: number) {
+    console.log('4 - updating state');
     this.stateService.updateState({
-      currentSelectedCharacter: uid })
+      currentSelectedCharacter: uid
+    });
   }
 }

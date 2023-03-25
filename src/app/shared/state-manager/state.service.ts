@@ -13,20 +13,19 @@ export class StateService {
   public state$ = this._state$.asObservable();
 
   public updateState(newState: Partial<State>): void {
+
     const currentState = this._state$.getValue();
+    console.log('new State', newState, 'old state', currentState);
+    
     const nextState = {...currentState, ...newState };
+    console.log('updating state', nextState);
     this._state$.next(nextState);
   }
 
-  public updateKnownUids(newUids: number[], newState: State) {
-    if(this.state$) {
-    newState.uidList = [...newState.uidList, ...newUids].sort((a, b) => a > b ? 1:-1);
-    const nextState = { ...newState} as State;
-    this._state$.next(nextState);
+  public updateKnownUids(newUids: number[]) {
+    const currentState = this._state$.getValue();
+    currentState.uidList = [...currentState.uidList, ...newUids].sort((a, b) => a > b ? 1:-1);
+    localStorage.setItem('uidList', JSON.stringify(currentState.uidList));
+    const nextState = { ...currentState };
   }
-}
-
-  // public getState(): State {
-  //   return this._state$.getValue();
-  // }
 }

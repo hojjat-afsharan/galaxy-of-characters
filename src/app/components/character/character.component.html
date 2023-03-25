@@ -1,7 +1,8 @@
 {{character$ | async | json}}
 
 
-<button [disabled]="isLoading" (click)="navigate(-1)">Previous page</button>
-<button [disabled]="isLoading" (click)="navigate(1)">Next page</button>
+{{firstChar}} - {{lastChar}}
+<button [disabled]="isLoading||firstChar" (click)="navigate(-1)">Previous page</button>
+<button [disabled]="isLoading||lastChar" (click)="navigate(1)">Next page</button>
 
 <button (click)="gotoList()">Go to list</button>
