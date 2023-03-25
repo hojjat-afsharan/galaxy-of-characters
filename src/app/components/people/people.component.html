@@ -4,5 +4,7 @@
     </a>
 </div>
 
-<button (click)="navigate(-1)">Previous page</button>
-<button (click)="navigate(1)">Next page</button>
+<button (click)="navigate(-1)" [disabled]="state?.currentPage == 1">Previous page</button>
+<button (click)="navigate(1)" [disabled]="state?.currentPage == state?.totalPages">Next page</button>
+
+{{state | json}}

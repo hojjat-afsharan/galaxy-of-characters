@@ -1,9 +1,9 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { CharacterComponent } from "./components/character/character.component";
-import { CharacterResolverService } from "./components/character/resolver/character-resolver.service";
 import { PageNotFoundComponent } from "./components/page-not-found/page-not-found.component";
 import { PeopleComponent } from "./components/people/people.component";
+import { PeopeQueryParamValidationGuardService } from "./components/people/services/peope-query-param-validation-guard.service";
 
 const routes: Routes = [
   {
@@ -14,17 +14,22 @@ const routes: Routes = [
   {
     path: "people",
     component: PeopleComponent,
+    canActivate: [PeopeQueryParamValidationGuardService ],
     data: {
-      queryParams: ["page", "limit"],
+      queryParams: {
+        page: {
+          type: "number",
+        },
+        limit: {
+          type: "number",
+        },
+      },
     },
     runGuardsAndResolvers: "always",
   },
   {
     path: "people/:uid",
     component: CharacterComponent,
-    // resolve: {
-    //   data: CharacterResolverService,
-    // },
     runGuardsAndResolvers: "always",
   },
   { path: "404", component: PageNotFoundComponent },

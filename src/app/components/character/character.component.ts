@@ -33,9 +33,8 @@ export class CharacterComponent {
   public navigate(whichDirection: number) {
 
     this.isLoading = true;
-    this.stateService.updateState({
-      currentSelectedCharacter: (this.state?.currentSelectedCharacter ?? 1) + whichDirection
-    });
+    const newState = Object.assign({...this.state}, {currentSelectedCharacter: (this.state?.currentSelectedCharacter ?? 1) + whichDirection})
+    this.stateService.updateState(newState as State);
 
     const queryParams = { uid:  this.state?.currentSelectedCharacter};
     this.router.navigate(['/people', this.state?.currentSelectedCharacter])
@@ -43,9 +42,10 @@ export class CharacterComponent {
   }
 
   public updateSelectedCharacter(uid: number) {
-    this.stateService.updateState({
+    const newState = Object.assign({...this.state}, {
       currentSelectedCharacter: uid
-    })
+    });
+    this.stateService.updateState(newState as State)
   }
 
   gotoList() {
