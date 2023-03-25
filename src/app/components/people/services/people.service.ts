@@ -1,8 +1,8 @@
 import { Injectable } from "@angular/core";
-import { map, of, tap } from "rxjs";
+import { map, Observable, of, tap } from "rxjs";
 import { StateService } from "src/app/shared/state-manager/state.service";
 import { People, PeopleResponse } from "../models/people.model";
-import { PeopleDataServiceService } from "./people-data-service.service";
+import { PeopleDataService } from "./people-data.service";
 
 @Injectable({
   providedIn: "root",
@@ -10,10 +10,10 @@ import { PeopleDataServiceService } from "./people-data-service.service";
 export class PeopleService {
   constructor(
     private stateService: StateService,
-    private peopleDataService: PeopleDataServiceService
+    private peopleDataService: PeopleDataService
   ) {}
 
-  public getPeople(page: number, limit: number) {
+  public getPeople(page: number, limit: number): Observable<People[]> {
     const cacheId = `page ${page} - limit ${limit}`;
 
     const cachedResponse = this.checkCachedData(cacheId);
@@ -42,7 +42,6 @@ export class PeopleService {
 
   checkCachedData(cacheId: string): string | null {
     const cachedResponse = localStorage.getItem(cacheId);
-
     return cachedResponse;
   }
 

@@ -1,15 +1,13 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable, OnDestroy } from '@angular/core';
 import { Observable, tap, map, catchError, throwError } from 'rxjs';
-import { StateService } from 'src/app/shared/state-manager/state.service';
 import { environment } from 'src/environments/environment';
 import { People, PeopleResponse } from '../models/people.model';
-import { PeopleService } from './people.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class PeopleDataServiceService implements OnDestroy{
+export class PeopleDataService implements OnDestroy{
   private readonly ENDPOINTS = {
     PEOPLE_LIST_URL: (pageNumber: number, pageLimit: number) =>
       `${environment.starWarsUrl}/people?page=${pageNumber}&limit=${pageLimit}`
