@@ -5,10 +5,10 @@ import {
   RouterStateSnapshot,
 } from "@angular/router";
 import { BehaviorSubject, Observable, of, tap } from "rxjs";
+import { DataService } from "src/app/services/data.service";
+import { State } from "src/app/shared/state-manager/models/state.model";
+import { StateService } from "src/app/shared/state-manager/state.service";
 import { People } from "../models/people.model";
-import { State } from "../models/state.model";
-import { DataService } from "./data.service";
-import { StateService } from "./state.service";
 
 @Injectable({
   providedIn: "root",
@@ -51,8 +51,6 @@ export class PeopleResolverService implements Resolve<People[]> {
       ),
       tap((data: People[]) => {
         data.forEach((people: People) => uidList.push(+people.uid));
-        
-        uidList = uidList.sort((a, b) => a > b ? 1:-1);
         this.stateService.updateKnownUids(uidList);
       })
     );

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { catchError, of, tap } from 'rxjs';
-import { Character } from '../models/character.model';
-import { DataService } from './data.service';
+import { Character } from 'src/app/components/character/models/character.model';
+import { DataService } from 'src/app/services/data.service';
 
 @Injectable({
   providedIn: 'root'

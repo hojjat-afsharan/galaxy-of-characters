@@ -1,9 +1,9 @@
 import { Component } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { map, Observable, tap } from "rxjs";
-import { Character, CharacterProperties } from "src/app/models/character.model";
-import { State } from "src/app/models/state.model";
-import { StateService } from "src/app/services/state.service";
+import { Character, CharacterProperties } from "src/app/components/character/models/character.model";
+import { State } from "src/app/shared/state-manager/models/state.model";
+import { StateService } from "src/app/shared/state-manager/state.service";
 
 @Component({
   selector: "app-character",

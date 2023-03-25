@@ -10,9 +10,9 @@ import {
   tap,
 } from "rxjs";
 import { environment } from "src/environments/environment";
-import { Character, CharacterResponse } from "../models/character.model";
-import { People, PeopleResponse } from "../models/people.model";
-import { StateService } from "./state.service";
+import { Character, CharacterResponse } from "../components/character/models/character.model";
+import { People, PeopleResponse } from "../components/people/models/people.model";
+import { StateService } from "../shared/state-manager/state.service";
 
 @Injectable({
   providedIn: "root",

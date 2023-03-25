@@ -1,9 +1,10 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { CharacterComponent } from './components/character/character.component';
-import { PeopleComponent } from './components/people/people.component';
-import { CharacterResolverService } from './services/character-resolver.service';
-import { PeopleResolverService } from './services/people-resolver.service';
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
+import { CharacterComponent } from "./components/character/character.component";
+import { CharacterResolverService } from "./components/character/resolver/character-resolver.service";
+import { PageNotFoundComponent } from "./components/page-not-found/page-not-found.component";
+import { PeopleComponent } from "./components/people/people.component";
+import { PeopleResolverService } from "./components/people/resolver/people-resolver.service";
 
 const routes: Routes = [
   // {
@@ -14,29 +15,33 @@ const routes: Routes = [
   //   }
   // },
   {
-    path: 'people',
+    path: "people",
     component: PeopleComponent,
     data: {
-      queryParams: ['page', 'limit']
+      queryParams: ["page", "limit"],
     },
     resolve: {
-      data: PeopleResolverService
+      data: PeopleResolverService,
     },
-    runGuardsAndResolvers: 'always'
+    runGuardsAndResolvers: "always",
   },
   {
-    path: 'people/:uid',
+    path: "people/:uid",
     component: CharacterComponent,
     resolve: {
-      data: CharacterResolverService
-    }
-  }
+      data: CharacterResolverService,
+    },
+  },
+  { path: '404', component: PageNotFoundComponent },
+  { path: '**', redirectTo: '/404' }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, {
-    onSameUrlNavigation: 'reload'
-  })],
-  exports: [RouterModule]
+  imports: [
+    RouterModule.forRoot(routes, {
+      onSameUrlNavigation: "reload",
+    }),
+  ],
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

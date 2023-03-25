@@ -1,11 +1,10 @@
 import { Component } from "@angular/core";
 import { ActivatedRoute, Data } from "@angular/router";
 import { map, Observable } from "rxjs";
-import { People, PeopleResponse } from "src/app/models/people.model";
+import { People, PeopleResponse } from "src/app/components/people/models/people.model";
 import { Router } from "@angular/router";
-import { StateService } from "src/app/services/state.service";
-import { State, STATE_INITIAL_VALUE } from "src/app/models/state.model";
-import { PeopleResolverService } from "src/app/services/people-resolver.service";
+import { StateService } from "src/app/shared/state-manager/state.service";
+import { State, STATE_INITIAL_VALUE } from "src/app/shared/state-manager/models/state.model";
 
 @Component({
   selector: "app-people",
