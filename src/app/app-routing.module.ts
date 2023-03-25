@@ -4,7 +4,6 @@ import { CharacterComponent } from "./components/character/character.component";
 import { CharacterResolverService } from "./components/character/resolver/character-resolver.service";
 import { PageNotFoundComponent } from "./components/page-not-found/page-not-found.component";
 import { PeopleComponent } from "./components/people/people.component";
-import { PeopleResolverService } from "./components/people/resolver/people-resolver.service";
 
 const routes: Routes = [
   {
@@ -18,17 +17,14 @@ const routes: Routes = [
     data: {
       queryParams: ["page", "limit"],
     },
-    // resolve: {
-    //   data: PeopleResolverService,
-    // },
     runGuardsAndResolvers: "always",
   },
   {
     path: "people/:uid",
     component: CharacterComponent,
-    resolve: {
-      data: CharacterResolverService,
-    },
+    // resolve: {
+    //   data: CharacterResolverService,
+    // },
     runGuardsAndResolvers: "always",
   },
   { path: "404", component: PageNotFoundComponent },

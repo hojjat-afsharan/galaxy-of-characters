@@ -39,7 +39,8 @@ export class PeopleComponent {
     this.router.navigate([], { 
       queryParams: {page: this.state?.currentPage, limit: this.state?.itemsLimit},
       relativeTo: this.route,
-      }).finally(() => this.isLoading = false);
+      })
+      .finally(() => this.isLoading = false);
 
   }
 

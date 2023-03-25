@@ -17,7 +17,6 @@ export class PeopleService {
 
   private _people$ = new BehaviorSubject<People[]>([]);
   public people$ = this._people$.asObservable();
-
   
   constructor(
     private stateService: StateService,
@@ -29,17 +28,14 @@ export class PeopleService {
 
   public getData() {
     this.route.queryParams.pipe(
-      tap((item) => console.log(item)),
       switchMap((params) => 
            this.getPeople((params as PeoplePageParams).page, (params as PeoplePageParams).limit)
         ),
-      tap((item) => console.log(item)),
       tap((item: People[]) => this._people$.next(item)))
       .subscribe();
   }
 
   private getPeople(page: number = 1, limit: number = 10): Observable<People[]> {
-    console.log(page, limit);
     const cacheId = `page ${page} - limit ${limit}`;
 
     const cachedResponse = this.checkCachedData(cacheId);

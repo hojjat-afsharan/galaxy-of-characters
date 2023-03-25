@@ -16,6 +16,6 @@ export class CharacterResolverService {
   resolve(route: ActivatedRouteSnapshot) {
 
     const uid = route.params['uid'];
-    return this.characterService.getCharacter(uid ? +uid : this.DEFAULT_CHARACTER_UID);
+    return of({});// this.characterService.getCharacter(uid ? +uid : this.DEFAULT_CHARACTER_UID);
   }
 }

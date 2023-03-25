@@ -1,9 +1,10 @@
 import { Component } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { map, Observable, tap } from "rxjs";
+import { map, Observable, switchMap, tap } from "rxjs";
 import { Character, CharacterProperties } from "src/app/components/character/models/character.model";
 import { State } from "src/app/shared/state-manager/models/state.model";
 import { StateService } from "src/app/shared/state-manager/state.service";
+import { CharacterService } from "./services/character.service";
 
 @Component({
   selector: "app-character",
@@ -12,21 +13,21 @@ import { StateService } from "src/app/shared/state-manager/state.service";
 })
 export class CharacterComponent {
   
-  public character$ = new Observable<CharacterProperties | null>();
+  public character$ = this.characterService.cahracter$;
   public state?: State;
   public isLoading = false;
 
   constructor(private route: ActivatedRoute,
     private router: Router,
+    private characterService: CharacterService,
     private stateService: StateService) {
       this.stateService.state$.subscribe((state: State) => this.state = state);
     }
 
   ngOnInit() {
-    this.character$ = this.route.data.pipe(
-      map(({ data }) => data),
-      map((data: Character) => (data.properties ? data.properties : null))
-    );
+     this.route.params.pipe(
+      switchMap((params: any) => this.characterService.getData((params)))
+     ).subscribe();
   }
 
   public navigate(whichDirection: number) {
@@ -36,7 +37,9 @@ export class CharacterComponent {
       currentSelectedCharacter: (this.state?.currentSelectedCharacter ?? 1) + whichDirection
     });
 
-    this.router.navigate(['/people', this.state?.currentSelectedCharacter]).finally(() => this.isLoading = false)
+    const queryParams = { uid:  this.state?.currentSelectedCharacter};
+    this.router.navigate(['/people', this.state?.currentSelectedCharacter])
+    .finally(() => this.isLoading = false)
   }
 
   public updateSelectedCharacter(uid: number) {
@@ -47,8 +50,6 @@ export class CharacterComponent {
 
   gotoList() {
     this.isLoading = true;
-
-    console.log(this.state);
     this.router.navigate(['/people'], { 
       queryParams: {page: this.state?.currentPage, limit: this.state?.itemsLimit}
       
