@@ -7,13 +7,15 @@ import { HttpClientModule} from '@angular/common/http';
 import { PeopleComponent } from './components/people/people.component';
 import { CharacterComponent } from './components/character/character.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { PlanetComponent } from './components/planet/planet.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PeopleComponent,
     CharacterComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    PlanetComponent
   ],
   imports: [
     BrowserModule,

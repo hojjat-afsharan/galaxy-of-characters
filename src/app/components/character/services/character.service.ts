@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRoute, ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot } from '@angular/router';
-import { BehaviorSubject, map, Observable, of, switchMap, tap } from 'rxjs';
+import { ActivatedRoute, ActivatedRouteSnapshot, NavigationEnd, Resolve, Router, RouterStateSnapshot } from '@angular/router';
+import { BehaviorSubject, filter, map, Observable, of, pairwise, switchMap, tap } from 'rxjs';
 import { StateService } from 'src/app/shared/state-manager/state.service';
 import { Character, CharacterResponse } from '../models/character.model';
 import { CharacterDataService } from './character-data.service';
@@ -16,22 +16,19 @@ export class CharacterService{
 
   private _character$ = new BehaviorSubject<Character>({});
   public cahracter$ = this._character$.asObservable();
+  previousUrl: any;
 
-  constructor(private stateService: StateService,
+  constructor(
     private characterDataService: CharacterDataService,
-    private route: ActivatedRoute
     ) {}
 
     public getData(params: CharacterPageParams): Observable<Character> {
-      console.log(params);
       return this.getCharacter(params.uid).pipe(
-        tap((item) => console.log(item)),
         tap((item: Character) => this._character$.next(item)))
     }
 
     public getCharacter(uid: number): Observable<Character> {
-      const cacheId = String(uid);
-
+      const cacheId = 'person x' + String(uid);
       const cachedResponse = this.checkCachedData(cacheId);
       if (cachedResponse) {
         return of(JSON.parse(cachedResponse));

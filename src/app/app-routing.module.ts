@@ -4,6 +4,7 @@ import { CharacterComponent } from "./components/character/character.component";
 import { PageNotFoundComponent } from "./components/page-not-found/page-not-found.component";
 import { PeopleComponent } from "./components/people/people.component";
 import { PeopeQueryParamValidationGuardService } from "./components/people/services/peope-query-param-validation-guard.service";
+import { PlanetComponent } from "./components/planet/planet.component";
 
 const routes: Routes = [
   {
@@ -23,6 +24,11 @@ const routes: Routes = [
   {
     path: "people/:uid",
     component: CharacterComponent,
+    runGuardsAndResolvers: "always",
+  },
+  {
+    path: "planet/:uid",
+    component: PlanetComponent,
     runGuardsAndResolvers: "always",
   },
   { path: "404", component: PageNotFoundComponent },

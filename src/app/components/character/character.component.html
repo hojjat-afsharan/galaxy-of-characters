@@ -1,8 +1,10 @@
 {{character$ | async | json}}
+<a [routerLink]="['/planet', (character$ | async)?.properties?.planetNumber]"> go to {{(character$ | async)?.properties?.name}} home world</a>
 
-
-{{firstChar}} - {{lastChar}}
 <button [disabled]="isLoading||firstChar" (click)="navigate(-1)">Previous page</button>
 <button [disabled]="isLoading||lastChar" (click)="navigate(1)">Next page</button>
+
+
+
 
 <button (click)="gotoList()">Go to list</button>

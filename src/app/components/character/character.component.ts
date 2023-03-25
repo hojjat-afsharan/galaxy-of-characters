@@ -1,6 +1,6 @@
 import { Component, OnDestroy } from "@angular/core";
-import { ActivatedRoute, Router } from "@angular/router";
-import { map, Observable, Subscription, switchMap, tap } from "rxjs";
+import { ActivatedRoute, NavigationEnd, Router } from "@angular/router";
+import { filter, map, Observable, pairwise, Subscription, switchMap, tap } from "rxjs";
 import { Character, CharacterProperties } from "src/app/components/character/models/character.model";
 import { State } from "src/app/shared/state-manager/models/state.model";
 import { StateService } from "src/app/shared/state-manager/state.service";
