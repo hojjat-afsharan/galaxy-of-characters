@@ -8,6 +8,7 @@ import { PeopleComponent } from './components/people/people.component';
 import { CharacterComponent } from './components/character/character.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { PlanetComponent } from './components/planet/planet.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,7 @@ import { PlanetComponent } from './components/planet/planet.component';
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
-
+    FontAwesomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]

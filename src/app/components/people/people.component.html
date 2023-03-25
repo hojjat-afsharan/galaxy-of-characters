@@ -4,7 +4,5 @@
     </a>
 </div>
 
-<button (click)="navigate(-1)" [disabled]="state?.currentPage == 1">Previous page</button>
-<button (click)="navigate(1)" [disabled]="state?.currentPage == state?.totalPages">Next page</button>
-
-{{state | json}}
+<button class="button is-dark pagination-previous" (click)="navigate(-1)" [disabled]="state?.currentPage == 1">Previous</button>
+<button class="button is-dark pagination-next" (click)="navigate(1)" [disabled]="state?.currentPage == state?.totalPages">Next</button>

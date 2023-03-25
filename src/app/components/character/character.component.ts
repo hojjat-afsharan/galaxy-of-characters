@@ -5,6 +5,7 @@ import { Character, CharacterProperties } from "src/app/components/character/mod
 import { State } from "src/app/shared/state-manager/models/state.model";
 import { StateService } from "src/app/shared/state-manager/state.service";
 import { CharacterService } from "./services/character.service";
+import { faEye, faMars, faVenus, faVenusMars } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: "app-character",
@@ -19,6 +20,11 @@ export class CharacterComponent implements OnDestroy {
   public subscription = new Subscription();
   public firstChar = false;
   public lastChar = false;
+
+  public faEye = faEye;
+  public faMars = faMars;
+  public faVenus = faVenus;
+  public faVenusMars = faVenusMars;
 
   public characterId = 0;
 

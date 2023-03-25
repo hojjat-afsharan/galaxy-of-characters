@@ -3,18 +3,54 @@
     <div >description: {{ data.description }}</div>
     <div >__v: {{ data.__v }}</div>
     <div >_id: {{ data._id }}</div>
-    <div> birth_year: {{data.properties?.birth_year}}</div>
-    <div> created: {{data.properties?.created}}</div>
-    <div> edited: {{data.properties?.edited}}</div>
-    <div> eye_color: {{data.properties?.eye_color}}</div>
+    <!-- <div> birth_year: {{data.properties?.birth_year}}</div> -->
+    <!-- <div> created: {{data.properties?.created | date: 'medium'}}</div>
+    <div> edited: {{data.properties?.edited | date: 'medium'}}</div> -->
+    <div> eye_color: {{data.properties?.eye_color}}
+        <span class="icon">
+            <fa-icon [icon]="faEye" [ngStyle]="{'color': data.properties?.eye_color}"></fa-icon>
+          </span>
+    </div>
     <div> gender: {{data.properties?.gender}}</div>
     <div> hair_color: {{data.properties?.hair_color}}</div>
     <div> height: {{data.properties?.height}}</div>
     <!-- <div> homeworld: {{data.properties?.homeworld}}</div> -->
     <div> mass: {{data.properties?.mass}}</div>
-    <div> name: {{data.properties?.name}}</div>
+    <!-- <div> name: {{data.properties?.name}}</div> -->
     <div> planetNumber: {{data.properties?.planetNumber}}</div>
     <div> skin_color: {{data.properties?.skin_color}}</div>
+
+
+
+    <div class="card">
+        
+        <div class="card-content">
+          <div class="media">
+            <div class="media-left">
+              <figure class="image is-48x48">
+                <img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image">
+              </figure>
+            </div>
+            <div class="media-content">
+              <p class="title is-4">{{data.properties?.name}}</p>
+              <p class="subtitle is-6">birth <span>{{data.properties?.birth_year}}</span></p>
+            </div>
+          </div>
+      
+          <div class="content">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            Phasellus nec iaculis mauris. <a>@bulmaio</a>.
+            <a href="#">#css</a> <a href="#">#responsive</a>
+            <br>
+            <div>
+                <time> created: {{data.properties?.created | date: 'medium'}}</time>
+                <time> edited: {{data.properties?.edited | date: 'medium'}}</time>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+
 
   </ng-container>
 <a [routerLink]="['/planets', (character$ | async)?.properties?.planetNumber]"> go to {{(character$ | async)?.properties?.name}} home world</a>
