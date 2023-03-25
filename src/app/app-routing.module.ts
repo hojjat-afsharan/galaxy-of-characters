@@ -27,7 +27,7 @@ const routes: Routes = [
     runGuardsAndResolvers: "always",
   },
   {
-    path: "planet/:uid",
+    path: "planets/:uid",
     component: PlanetComponent,
     runGuardsAndResolvers: "always",
   },

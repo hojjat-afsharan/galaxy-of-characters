@@ -1,4 +1,21 @@
-<p>planet works!</p>
+<ng-container *ngIf="planet$ | async as data">
+    <div > uid: {{ data.uid }}</div>
+    <div >description: {{ data.description }}</div>
+    <div >__v: {{ data.__v }}</div>
+    <div >_id: {{ data._id }}</div>
+    <div> climate: {{data.properties?.climate}}</div>
+    <div> created: {{data.properties?.created}}</div>
+    <div> diameter: {{data.properties?.diameter}}</div>
+    <div> edited: {{data.properties?.edited}}</div>
+    <div> gravity: {{data.properties?.gravity}}</div>
+    <div> name: {{data.properties?.name}}</div>
+    <div> orbital_period: {{data.properties?.orbital_period}}</div>
+    <div> population: {{data.properties?.population}}</div>
+    <div> rotation_period: {{data.properties?.rotation_period}}</div>
+    <div> surface_water: {{data.properties?.surface_water}}</div>
+    <div> terrain: {{data.properties?.terrain}}</div>
+    <div> url: {{data.properties?.url}}</div>
+  </ng-container>
 
 <!-- <a [routerLink]="[previousUrl]">back to character</a> -->
-<button (click)="navigate()">back</button>
+<button (click)="navigate()">back to character</button>

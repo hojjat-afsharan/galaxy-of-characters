@@ -31,7 +31,6 @@ export class CharacterComponent implements OnDestroy {
         const indexOfCurrentChar = state.uidList?.findIndex((i) => i === this.state?.currentSelectedCharacter);
         this.firstChar = indexOfCurrentChar === 0;
         this.lastChar = state.totalRecords === indexOfCurrentChar;
-
       }));
     }
 

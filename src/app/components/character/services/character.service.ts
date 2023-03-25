@@ -28,7 +28,7 @@ export class CharacterService{
     }
 
     public getCharacter(uid: number): Observable<Character> {
-      const cacheId = 'person x' + String(uid);
+      const cacheId = 'person ' + String(uid);
       const cachedResponse = this.checkCachedData(cacheId);
       if (cachedResponse) {
         return of(JSON.parse(cachedResponse));
