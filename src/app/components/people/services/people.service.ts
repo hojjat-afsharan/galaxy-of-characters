@@ -45,12 +45,13 @@ this.stateService.state$.subscribe((state) => this.state = state);
 
     const cachedResponse = this.checkCachedData(cacheId);
 
+    this.getCachedState();
+
     if (cachedResponse) {
-      const newState = Object.assign({...this.state}, {
+      this.stateService.updateState({
         currentPage: page,
         itemsLimit: limit,
-      })
-      this.stateService.updateState(newState as State);
+      });
       return of(JSON.parse(cachedResponse));
     }
 
@@ -68,6 +69,12 @@ this.stateService.state$.subscribe((state) => this.state = state);
       tap((item: People[]) => this._people$.next(item))
     );
   }
+  getCachedState() {
+    const maxValues = localStorage.getItem('maxValues');
+    if(maxValues) {
+      this.stateService.updateState(JSON.parse(maxValues) as State);
+    }
+  }
 
   checkCachedData(cacheId: string): string | null {
     const cachedResponse = localStorage.getItem(cacheId);
@@ -79,15 +86,20 @@ this.stateService.state$.subscribe((state) => this.state = state);
     pageNumber: number,
     pageLimit: number
   ): void {
-    const newState = Object.assign({...this.state}, {
+    const newState: Partial<State> = {
+      totalRecords: response.total_records,
+      totalPages: response.total_pages
+    }
+    this.stateService.updateState({
       totalRecords: response.total_records,
       totalPages: response.total_pages,
       previous: response.previous,
       next: response.next,
       currentPage: pageNumber,
       itemsLimit: pageLimit,
-    })
-    this.stateService.updateState(newState as State);
+    });
+
+    localStorage.setItem('maxValues', JSON.stringify( newState));
   }
 
   private updateKnownPeopleUids(people: People[]) {

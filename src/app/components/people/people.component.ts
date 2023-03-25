@@ -32,10 +32,9 @@ export class PeopleComponent {
   public navigate(whichDirection: number) {
 
     this.isLoading = true;
-    const newState = Object.assign({...this.state},{
+    this.stateService.updateState({
       currentPage: +(this.state?.currentPage ?? 1) + whichDirection
     });
-    this.stateService.updateState(newState as State);
 
     this.router.navigate([], { 
       queryParams: {page: this.state?.currentPage, limit: this.state?.itemsLimit},
@@ -46,8 +45,7 @@ export class PeopleComponent {
   }
 
   public updateSelectedCharacter(uid: number) {
-    const newState = Object.assign({...this.state},{
-      currentSelectedCharacter: uid });
-    this.stateService.updateState(newState as State)
+    this.stateService.updateState({
+      currentSelectedCharacter: uid })
   }
 }

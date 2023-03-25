@@ -33,8 +33,7 @@ export class CharacterComponent {
   public navigate(whichDirection: number) {
 
     this.isLoading = true;
-    const newState = Object.assign({...this.state}, {currentSelectedCharacter: (this.state?.currentSelectedCharacter ?? 1) + whichDirection})
-    this.stateService.updateState(newState as State);
+    this.stateService.updateState({currentSelectedCharacter: (this.state?.currentSelectedCharacter ?? 1) + whichDirection});
 
     const queryParams = { uid:  this.state?.currentSelectedCharacter};
     this.router.navigate(['/people', this.state?.currentSelectedCharacter])
@@ -42,14 +41,14 @@ export class CharacterComponent {
   }
 
   public updateSelectedCharacter(uid: number) {
-    const newState = Object.assign({...this.state}, {
+    this.stateService.updateState({
       currentSelectedCharacter: uid
-    });
-    this.stateService.updateState(newState as State)
+    })
   }
 
   gotoList() {
     this.isLoading = true;
+    console.log(this.state);
     this.router.navigate(['/people'], { 
       queryParams: {page: this.state?.currentPage, limit: this.state?.itemsLimit}
       

@@ -14,16 +14,9 @@ const routes: Routes = [
   {
     path: "people",
     component: PeopleComponent,
-    canActivate: [PeopeQueryParamValidationGuardService ],
+    // canActivate: [PeopeQueryParamValidationGuardService ],
     data: {
-      queryParams: {
-        page: {
-          type: "number",
-        },
-        limit: {
-          type: "number",
-        },
-      },
+      queryParams: ['page', 'limit'],
     },
     runGuardsAndResolvers: "always",
   },
