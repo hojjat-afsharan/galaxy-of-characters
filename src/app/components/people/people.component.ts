@@ -8,6 +8,9 @@ import { delay, distinctUntilChanged, Subscription, tap } from "rxjs";
 import { RouteInitial } from "src/app/app-routing.module";
 import { PeoplePageParams } from "./models/people.model";
 import { BreakpointEnum, ResponsivenessService } from "src/app/shared/services/responsiveness.service";
+import {
+ faAngleRight
+} from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: "app-people",
@@ -24,6 +27,9 @@ export class PeopleComponent implements OnDestroy {
   public state?: State;
   isLoading = false;
   public currentPage = 1;
+
+  public howeredItem: number | undefined;
+  public faAngleRight = faAngleRight;
 
   private subscription = new Subscription();
   public breakpointEnum = BreakpointEnum;
