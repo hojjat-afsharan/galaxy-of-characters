@@ -28,5 +28,15 @@
         this.name = people.name;
         this.url = people.url;
     }
-
   }
+
+
+export interface PeoplePageParams {
+  page: number,
+  limit: number
+}
+
+export const DEFAULT_PEOPLE_LIST_PARAMS = {
+  currentPage: 1,
+  limit: 10
+}

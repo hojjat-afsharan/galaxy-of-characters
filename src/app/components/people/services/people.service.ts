@@ -1,43 +1,58 @@
-import { Injectable } from "@angular/core";
-import { ActivatedRoute, NavigationEnd, Router } from "@angular/router";
-import { BehaviorSubject, filter, map, Observable, of, switchMap, tap } from "rxjs";
-import { State, STATE_INITIAL_VALUE } from "src/app/shared/state-manager/models/state.model";
+import { Injectable, OnDestroy } from "@angular/core";
+import { ActivatedRoute, Router } from "@angular/router";
+import {
+  BehaviorSubject,
+  map,
+  Observable,
+  of,
+  Subscription,
+  switchMap,
+  tap,
+} from "rxjs";
+import {
+  State,
+} from "src/app/shared/state-manager/models/state.model";
 import { StateService } from "src/app/shared/state-manager/state.service";
-import { People, PeopleResponse } from "../models/people.model";
+import {
+  DEFAULT_PEOPLE_LIST_PARAMS,
+  People,
+  PeoplePageParams,
+  PeopleResponse,
+} from "../models/people.model";
 import { PeopleDataService } from "./people-data.service";
-
-export interface PeoplePageParams {
-  page: number,
-  limit: number
-}
 
 @Injectable({
   providedIn: "root",
 })
-export class PeopleService {
-
+export class PeopleService implements OnDestroy {
   private _people$ = new BehaviorSubject<People[]>([]);
   public people$ = this._people$.asObservable();
-  
+
+  private _lastPage$ = new BehaviorSubject<boolean>(false);
+  public lastPage$ = this._lastPage$.asObservable();
+
+  private subscription = new Subscription();
+
   constructor(
     private stateService: StateService,
     private peopleDataService: PeopleDataService,
-    private route: ActivatedRoute, private router: Router
   ) {
-    this.getData();
   }
 
-  public getData() {
-    this.route.queryParams.pipe(
-      switchMap((params) => 
-           this.getPeople((params as PeoplePageParams).page, (params as PeoplePageParams).limit)),
-      tap((item: People[]) => this._people$.next(item)))
-      .subscribe();
+  public getData(params: PeoplePageParams) {
+          this.getPeople(params.page, params.limit)
+            .subscribe((people: People[]) => this._people$.next(people));
   }
 
-  public getPeople(page: number = 1, limit: number = 10): Observable<People[]> {
-
-    this.getCachedState();
+  public getPeople(
+    page: number = DEFAULT_PEOPLE_LIST_PARAMS.currentPage,
+    limit: number = DEFAULT_PEOPLE_LIST_PARAMS.limit
+  ): Observable<People[]> {
+    const totalPages = this.getCachedState()?.totalPages;
+    
+    if (totalPages) {
+      this._lastPage$.next(totalPages === Number(page));
+    }
 
     const cacheId = `page ${page} - limit ${limit}`;
     const cachedResponse = this.checkCachedData(cacheId);
@@ -47,29 +62,31 @@ export class PeopleService {
 
     return this.peopleDataService.fetchPeople(page, limit).pipe(
       tap((response: PeopleResponse) =>
-        this.updatePeopleState(response, page, limit)
+        {
+          this.updatePeopleState(response, page, limit);
+          debugger;
+          this._lastPage$.next(response.total_pages === +page);
+        }
       ),
       map((response: PeopleResponse) =>
         response.results.map((item) => new People(item))
       ),
-      tap((data: People[]) =>
-        localStorage.setItem(cacheId, JSON.stringify(data))
-      ),
-      tap((data: People[]) => this.updateKnownPeopleUids(data)),
-      tap((item: People[]) => this._people$.next(item))
+      tap((data: People[]) => { 
+        localStorage.setItem(cacheId, JSON.stringify(data));
+        this.updateKnownPeopleUids(data);
+        this._people$.next(data);
+      })
     );
   }
 
-  getCachedState(): boolean {
-    const initialValues = localStorage.getItem('maxValues');
-    const uidList = localStorage.getItem('uidList');
-    if(initialValues && uidList) {
-      console.log('7 - updating state');
-      this.stateService.updateState(JSON.parse(initialValues) as State);
-      this.stateService.updateState({uidList: JSON.parse(uidList? uidList : '{}')});
-      return true;
+  getCachedState(): Partial<State> {
+    const initialValues = localStorage.getItem("maxValues");
+    if (initialValues ) {
+      const partialState = JSON.parse(initialValues) as State;
+      this.stateService.updateState(partialState);
+      return partialState;
     }
-    return false;
+    return {};
   }
 
   checkCachedData(cacheId: string): string | null {
@@ -84,9 +101,8 @@ export class PeopleService {
   ): void {
     const newState: Partial<State> = {
       totalRecords: response.total_records,
-      totalPages: response.total_pages
-    }
-    console.log('0-update state')
+      totalPages: response.total_pages,
+    };
     this.stateService.updateState({
       totalRecords: response.total_records,
       totalPages: response.total_pages,
@@ -96,13 +112,20 @@ export class PeopleService {
       itemsLimit: pageLimit,
     });
 
-    localStorage.setItem('maxValues', JSON.stringify( newState));
+    localStorage.setItem("maxValues", JSON.stringify(newState));
   }
 
   private updateKnownPeopleUids(people: People[]) {
     let uidList: number[] = [];
-
     people.forEach((people: People) => uidList.push(+people.uid));
     this.stateService.updateKnownUids(uidList);
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+
+  public cleanData() {
+    this._people$.next([]);
   }
 }

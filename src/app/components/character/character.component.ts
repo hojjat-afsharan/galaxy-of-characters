@@ -54,9 +54,7 @@ export class CharacterComponent implements OnDestroy {
     private stateService: StateService
   ) {
     this.subscription.add(
-      this.stateService.state$.subscribe((state: State) => {
-        this.state = state;
-      })
+      this.stateService.state$.subscribe((state: State) => this.state = state)
     );
 
     this.subscription.add(

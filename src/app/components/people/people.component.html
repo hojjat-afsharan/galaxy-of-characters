@@ -10,11 +10,11 @@
       </div>
     </div>
   </div>
-  <button class="button is-dark pagination-previous" (click)="navigatePreNext(-1)" [disabled]="state?.currentPage == 1">
+  <button class="button is-dark pagination-previous" (click)="navigatePreNext(-1)" [disabled]="currentPage == 1">
     Previous
   </button>
   <button class="button is-dark pagination-next" (click)="navigatePreNext(1)"
-    [disabled]="state?.currentPage == state?.totalPages">
+    [disabled]="(lastPage$ | async)">
     Next
   </button>
 </div>
