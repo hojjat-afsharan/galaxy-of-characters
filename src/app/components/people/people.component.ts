@@ -1,32 +1,41 @@
-import { Component, OnDestroy } from "@angular/core";
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy } from "@angular/core";
 import { ActivatedRoute, Data } from "@angular/router";
 import { Router } from "@angular/router";
 import { StateService } from "src/app/shared/state-manager/state.service";
 import { State } from "src/app/shared/state-manager/models/state.model";
 import { PeopleService } from "./services/people.service";
-import { Subscription } from "rxjs";
+import { delay, distinctUntilChanged, Subscription, tap } from "rxjs";
 import { RouteInitial } from "src/app/app-routing.module";
 import { PeoplePageParams } from "./models/people.model";
+import { BreakpointEnum, ResponsivenessService } from "src/app/shared/services/responsiveness.service";
 
 @Component({
   selector: "app-people",
   templateUrl: "./people.component.html",
-  styleUrls: ["./people.component.scss"],
+  styleUrls: ["./people.component.scss"]
 })
 export class PeopleComponent implements OnDestroy {
   public people$ = this.peopleService.people$;
   public lastPage$ = this.peopleService.lastPage$;
+  public breakpoint$ = this.responsivenessService.breakpointObservable$.pipe(
+    distinctUntilChanged(),
+    tap(item => this.changeDetector.detectChanges())
+  );
   public state?: State;
   isLoading = false;
   public currentPage = 1;
 
   private subscription = new Subscription();
+  public breakpointEnum = BreakpointEnum;
+  breakpoint: BreakpointEnum = BreakpointEnum.SM;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private peopleService: PeopleService,
-    private stateService: StateService
+    private stateService: StateService,
+    public responsivenessService: ResponsivenessService,
+    private changeDetector: ChangeDetectorRef
   ) {
     this.subscription.add(
       this.stateService.state$.subscribe((state: State) => (this.state = state))
@@ -34,7 +43,6 @@ export class PeopleComponent implements OnDestroy {
 
     this.subscription.add(
       this.route.queryParams.subscribe((params: any) => {
-        console.log(params)
       const pageParams = params as PeoplePageParams;
       this.currentPage = pageParams.page;
       this.peopleService.getData(pageParams);
@@ -42,9 +50,14 @@ export class PeopleComponent implements OnDestroy {
     ));
   }
 
-
-
-  ngOnInit() {}
+  ngOnInit() {
+    this.subscription.add(this.responsivenessService.breakpointObservable$.pipe(
+      distinctUntilChanged()
+    ).subscribe((breakpoint) => {
+      this.breakpoint = breakpoint;
+      this.changeDetector.detectChanges()
+    }))
+  }
 
   navigateToCharacter(characterNumber: string) {
     this.updateSelectedCharacter(+characterNumber);

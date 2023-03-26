@@ -48,6 +48,8 @@ export class PeopleService implements OnDestroy {
     page: number = DEFAULT_PEOPLE_LIST_PARAMS.currentPage,
     limit: number = DEFAULT_PEOPLE_LIST_PARAMS.limit
   ): Observable<People[]> {
+
+   
     const totalPages = this.getCachedState()?.totalPages;
     
     if (totalPages) {
@@ -64,7 +66,6 @@ export class PeopleService implements OnDestroy {
       tap((response: PeopleResponse) =>
         {
           this.updatePeopleState(response, page, limit);
-          debugger;
           this._lastPage$.next(response.total_pages === +page);
         }
       ),

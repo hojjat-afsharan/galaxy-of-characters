@@ -1,6 +1,7 @@
 import { Component, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { RouteInitial } from 'src/app/app-routing.module';
 import { State } from 'src/app/shared/state-manager/models/state.model';
 import { StateService } from 'src/app/shared/state-manager/state.service';
 
@@ -24,9 +25,6 @@ export class PageNotFoundComponent implements OnDestroy {
 
   gotoList() {
 
-    this.router.navigate(['/people'], { 
-      queryParams: {page: this.state?.currentPage, limit: this.state?.itemsLimit}
-      
-      });
+    this.router.navigate([RouteInitial.PEOPLE]);
     }
 }

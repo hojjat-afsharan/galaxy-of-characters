@@ -1,20 +1,24 @@
-<div class="columns">
-  <div class="column is-four-fifths" *ngFor="let person of people$ | async">
-    <div class="card">
+<div class="container">
+  {{breakpoint}}
+  <div class="title" *ngFor="let person of people$ | async">
+    <div class="">
       <div (click)="navigateToCharacter(person.uid)">
-        <header class="card-header">
-          <p class="card-header-title">
+        <header class="">
+          <p class="">
             {{ person.name }}
           </p>
         </header>
       </div>
     </div>
   </div>
-  <button class="button is-dark pagination-previous" (click)="navigatePreNext(-1)" [disabled]="currentPage == 1">
-    Previous
+</div>
+
+<div class="nav-buttons">
+  <button class="button is-dark pagination-previous" (click)="navigatePreNext(-1)" [disabled]="!currentPage || currentPage == 1">
+    Previous {{currentPage}}
   </button>
   <button class="button is-dark pagination-next" (click)="navigatePreNext(1)"
     [disabled]="(lastPage$ | async)">
-    Next
+    Next {{currentPage}}
   </button>
 </div>
