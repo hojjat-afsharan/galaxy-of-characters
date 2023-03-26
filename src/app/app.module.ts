@@ -1,4 +1,4 @@
-import { ApplicationRef, CUSTOM_ELEMENTS_SCHEMA, DoBootstrap, Injector, NgModule } from '@angular/core';
+import { ApplicationRef, DoBootstrap, Injector, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -26,18 +26,27 @@ import {createCustomElement} from '@angular/elements';
     AppRoutingModule,
     FontAwesomeModule
   ],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: []
 })
 export class AppModule implements DoBootstrap{
   constructor(private injector: Injector) {
-    const galaxyCustomElement = createCustomElement(AppComponent, {injector: this.injector});
-    window.customElements.define('galaxy', galaxyCustomElement);
+    
   }
 
+
+
+
+
+
   ngDoBootstrap(appRef: ApplicationRef): void {
-    
+    const galaxyCustomElement = createCustomElement(PeopleComponent, {injector: this.injector});
+    window.customElements.define('star-wars-galaxy', galaxyCustomElement);
+
+    const characterCustomElement = createCustomElement(CharacterComponent, {injector: this.injector});
+    window.customElements.define('star-wars-character', characterCustomElement);
+
+    const planetCustomElement = createCustomElement(PlanetComponent, {injector: this.injector});
+    window.customElements.define('star-wars-planet', planetCustomElement);
   }
 
  }
