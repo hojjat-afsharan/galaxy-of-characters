@@ -4,6 +4,9 @@ import { Subscription } from 'rxjs';
 import { RouteInitial } from 'src/app/app-routing.module';
 import { State } from 'src/app/shared/state-manager/models/state.model';
 import { StateService } from 'src/app/shared/state-manager/state.service';
+import {
+  faChevronLeft,
+} from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: 'app-page-not-found',
@@ -14,6 +17,8 @@ export class PageNotFoundComponent implements OnDestroy {
   
   public state?: State;
   public subscription = new Subscription();
+
+  public faChevronleft = faChevronLeft;
 
   constructor( private router: Router,
     private stateService: StateService) {

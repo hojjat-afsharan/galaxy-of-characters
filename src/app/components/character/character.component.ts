@@ -17,7 +17,7 @@ import {
   faJedi,
   faHand,
   faSeedling,
-  faChevronLeft
+  faChevronLeft,
 } from "@fortawesome/free-solid-svg-icons";
 import { RouteInitial } from "src/app/app-routing.module";
 import { BreakpointEnum, ResponsivenessService } from "src/app/shared/services/responsiveness.service";
