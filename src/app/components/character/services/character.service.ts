@@ -29,8 +29,8 @@ export class CharacterService implements OnDestroy {
     const cacheId = "person " + String(uid);
     const cachedResponse = this.checkCachedData(cacheId);
     if (cachedResponse) {
-      return of(new Character(JSON.parse(cachedResponse) as Character)).pipe(
-      );
+      return of(JSON.parse(cachedResponse));
+      // return of(new Character(JSON.parse(cachedResponse) as Character));
     }
     return this.characterDataService.fetchCharacter(uid).pipe(
       map((response: CharacterResponse) => new Character(response.result)),

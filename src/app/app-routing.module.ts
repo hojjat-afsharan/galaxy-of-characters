@@ -3,8 +3,12 @@ import { RouterModule, Routes } from "@angular/router";
 import { CharacterComponent } from "./components/character/character.component";
 import { PageNotFoundComponent } from "./components/page-not-found/page-not-found.component";
 import { PeopleComponent } from "./components/people/people.component";
-import { PeopeQueryParamValidationGuardService } from "./components/people/services/peope-query-param-validation-guard.service";
 import { PlanetComponent } from "./components/planet/planet.component";
+
+export enum RouteInitial {
+  PEOPLE = '/people',
+  PLANET = '/planets'
+}
 
 const routes: Routes = [
   

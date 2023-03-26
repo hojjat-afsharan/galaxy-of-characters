@@ -2,9 +2,11 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import {  Subscription } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
+import { RouteInitial } from 'src/app/app-routing.module';
 import { PreviousRouteService } from 'src/app/shared/services/previous-route.service';
 import { State } from 'src/app/shared/state-manager/models/state.model';
 import { StateService } from 'src/app/shared/state-manager/state.service';
+import { PlanetPageParams } from './model/planet.model';
 import { PlanetService } from './services/planet.service';
 
 @Component({
@@ -14,14 +16,12 @@ import { PlanetService } from './services/planet.service';
 })
 export class PlanetComponent implements OnInit, OnDestroy {
 
-  previousUrl: string | undefined;
   public planet$ = this.planetService.planet$;
   private subscription = new Subscription();
   public state?: State;
 
   constructor(private route: ActivatedRoute,
     private router: Router,
-    private previousRouteService: PreviousRouteService,
     private planetService: PlanetService,
     private stateService: StateService) {
 
@@ -31,18 +31,17 @@ export class PlanetComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.previousUrl = this.previousRouteService.getPreviousUrl();
-    this.subscription.add(this.route.params.pipe(
-      switchMap((params: any) => this.planetService.getData((params)))
-     ).subscribe());
+    this.subscription.add(this.route.params.subscribe((params: any) => 
+    this.planetService.getData(params as PlanetPageParams)));
   }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+    this.planetService.cleanData();
   }
 
   public navigate() {
     console.log(this.state?.currentSelectedCharacter);
-    this.router.navigate(['/people', this.state?.currentSelectedCharacter]);
+    this.router.navigate([RouteInitial.PEOPLE, this.state?.currentSelectedCharacter]);
   }
 }

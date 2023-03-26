@@ -52,3 +52,7 @@ export class PlanetProperties {
     this.url = properties?.url;
   }
 }
+
+export interface PlanetPageParams {
+  uid: number
+}
