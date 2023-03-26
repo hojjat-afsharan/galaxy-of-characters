@@ -1,6 +1,6 @@
-import { Component, OnDestroy } from "@angular/core";
+import { ChangeDetectorRef, Component, OnDestroy } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { Subscription } from "rxjs";
+import { distinctUntilChanged, Subscription, tap } from "rxjs";
 import {
   CharacterPageParams,
   Gender,
@@ -17,8 +17,10 @@ import {
   faJedi,
   faHand,
   faSeedling,
+  faChevronLeft
 } from "@fortawesome/free-solid-svg-icons";
 import { RouteInitial } from "src/app/app-routing.module";
+import { BreakpointEnum, ResponsivenessService } from "src/app/shared/services/responsiveness.service";
 
 @Component({
   selector: "app-character",
@@ -26,7 +28,12 @@ import { RouteInitial } from "src/app/app-routing.module";
   styleUrls: ["./character.component.scss"],
 })
 export class CharacterComponent implements OnDestroy {
+
   public character$ = this.characterService.cahracter$;
+  public breakpoint$ = this.responsivenessService.breakpointObservable$.pipe(
+    distinctUntilChanged(),
+    tap(() => this.changeDetector.detectChanges())
+  );
   public state?: State;
   public isLoading = false;
   public subscription = new Subscription();
@@ -38,17 +45,23 @@ export class CharacterComponent implements OnDestroy {
   public faTableList = faTableList;
   public faJedi = faJedi;
   public faHand = faHand;
+  public faChevronleft = faChevronLeft;
  
   public faSeedling = faSeedling;
   public characterId = 0;
   public GENDER = Gender;
   car: any;
 
+  public breakpointEnum = BreakpointEnum;
+  breakpoint: BreakpointEnum = BreakpointEnum.SM;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private characterService: CharacterService,
-    private stateService: StateService
+    private stateService: StateService,
+    public responsivenessService: ResponsivenessService,
+    private changeDetector: ChangeDetectorRef
   ) {
     this.subscription.add(
       this.stateService.state$.subscribe((state: State) => this.state = state)

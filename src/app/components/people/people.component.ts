@@ -23,7 +23,7 @@ export class PeopleComponent implements OnDestroy {
   public lastPage$ = this.peopleService.lastPage$;
   public breakpoint$ = this.responsivenessService.breakpointObservable$.pipe(
     distinctUntilChanged(),
-    tap(item => this.changeDetector.detectChanges())
+    tap(() => this.changeDetector.detectChanges())
   );
   public state?: State;
   isLoading = false;
@@ -60,12 +60,7 @@ export class PeopleComponent implements OnDestroy {
   }
 
   ngOnInit() {
-    this.subscription.add(this.responsivenessService.breakpointObservable$.pipe(
-      distinctUntilChanged()
-    ).subscribe((breakpoint) => {
-      this.breakpoint = breakpoint;
-      this.changeDetector.detectChanges()
-    }))
+  
   }
 
   navigateToCharacter(characterNumber: string) {

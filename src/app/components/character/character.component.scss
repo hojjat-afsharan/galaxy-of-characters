@@ -1,0 +1,110 @@
+@import "/src/app/shared/styles/mixins.scss";
+@import "/src/app/shared/styles/variables.scss";
+
+:host(app-character) {
+    padding: 1rem;
+    font-size: $default-font-size;
+    width: 50%;
+}
+
+.character-container {
+    margin: 2rem;
+
+    .container__title {
+        color: #5F6468;
+
+        &::after {
+            content: '';
+            display: block;
+            max-width: 600px;
+            height: 2px;
+            background-color: #959595;
+            margin-top: 5px;
+        }
+
+        &.md::after {
+            width: 95%;
+        }
+
+        &.sm::after {
+            width: 100%;
+        }
+    }
+
+    .card {
+        .card-content {
+
+            .card__items {
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-start;
+                align-items: center;
+
+                .item__title {
+                    font-size: 1.05rem;
+
+                    &::after {
+                        content: ':';
+                        padding-right: .5rem;
+                    }
+                }
+
+                .item__value:not(.planet) {
+                    font-size: 1.2rem;
+                    font-weight: bold;
+                    text-transform: uppercase;
+                    color: $normal-value-color;
+
+                    &>span::after {
+                        font-size: 0.8rem;
+                        color: unset;
+                        text-transform: lowercase;
+                    }
+
+                    .scale::after {
+                        content: 'cm';
+                    }
+
+                    .weight::after {
+                        content: 'kg';
+                    }
+                }
+
+                .item__value.planet {
+                    display: flex;
+
+                    .plane__link {
+                        padding-left: 1rem;
+                        font-size: .95rem;
+                        color: $link-value-color;
+                        text-decoration: underline;
+                        cursor: pointer;
+                        transition: transform 0.2s ease-in-out;
+
+                        &:hover {
+                            transform: scale(1.01)
+                        }
+                    }
+                }
+            }
+
+            .card__back {
+                display: inline;
+                cursor: pointer;
+                color: $link-value-color;
+                font-size: 1rem;
+                transition: font-size 0.2s ease-in-out;
+                display: flex;
+                align-items: center;
+
+                & > span {
+                    color: $dark-blue;
+                }
+
+                &:hover {
+                    font-size: 1.05rem;
+                }
+            }
+        }
+    }
+}
