@@ -7,10 +7,16 @@ import { PeopeQueryParamValidationGuardService } from "./components/people/servi
 import { PlanetComponent } from "./components/planet/planet.component";
 
 const routes: Routes = [
+  
   {
-    path: "",
-    redirectTo: "people",
-    pathMatch: "full",
+    path: "people/:uid",
+    component: CharacterComponent,
+    runGuardsAndResolvers: "always",
+  },
+  {
+    path: "planets/:uid",
+    component: PlanetComponent,
+    runGuardsAndResolvers: "always",
   },
   {
     path: "people",
@@ -22,14 +28,9 @@ const routes: Routes = [
     runGuardsAndResolvers: "always",
   },
   {
-    path: "people/:uid",
-    component: CharacterComponent,
-    runGuardsAndResolvers: "always",
-  },
-  {
-    path: "planets/:uid",
-    component: PlanetComponent,
-    runGuardsAndResolvers: "always",
+    path: "",
+    redirectTo: "people",
+    pathMatch: "full",
   },
   { path: "404", component: PageNotFoundComponent },
   { path: "**", redirectTo: "/404" },

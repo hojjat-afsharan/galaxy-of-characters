@@ -9,7 +9,6 @@ import { CharacterComponent } from './components/character/character.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { PlanetComponent } from './components/planet/planet.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-
 @NgModule({
   declarations: [
     AppComponent,

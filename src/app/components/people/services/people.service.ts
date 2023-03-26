@@ -45,8 +45,6 @@ export class PeopleService {
       return of(JSON.parse(cachedResponse));
     }
 
-    
-
     return this.peopleDataService.fetchPeople(page, limit).pipe(
       tap((response: PeopleResponse) =>
         this.updatePeopleState(response, page, limit)

@@ -1,11 +1,12 @@
 import { Component, OnDestroy } from "@angular/core";
 import { ActivatedRoute, NavigationEnd, Router } from "@angular/router";
 import { filter, map, Observable, pairwise, Subscription, switchMap, tap } from "rxjs";
-import { Character, CharacterProperties } from "src/app/components/character/models/character.model";
+import { Character, CharacterProperties, Gender } from "src/app/components/character/models/character.model";
 import { State } from "src/app/shared/state-manager/models/state.model";
 import { StateService } from "src/app/shared/state-manager/state.service";
-import { CharacterService } from "./services/character.service";
-import { faEye, faMars, faVenus, faVenusMars } from '@fortawesome/free-solid-svg-icons';
+import { CharacterPageParams, CharacterService } from "./services/character.service";
+import { faEye, faMars, faVenus, faVenusMars, faTableList, faJedi, faHand, faChevronLeft, faChevronRight,
+  faSeedling} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: "app-character",
@@ -25,8 +26,16 @@ export class CharacterComponent implements OnDestroy {
   public faMars = faMars;
   public faVenus = faVenus;
   public faVenusMars = faVenusMars;
+  public faTableList = faTableList;
+  public faJedi = faJedi;
+  public faHand = faHand;
+  public faChevronLeft = faChevronLeft;
+  public faChevronRight = faChevronRight;
+  public faSeedling = faSeedling;
 
   public characterId = 0;
+
+  public GENDER = Gender;
 
   constructor(private route: ActivatedRoute,
     private router: Router,
@@ -41,16 +50,19 @@ export class CharacterComponent implements OnDestroy {
     }
 
   ngOnInit() {
-    this.subscription.add(this.route.params.pipe(
-      switchMap((params: any) => this.characterService.getData((params)))
-     ).subscribe((data: Character) => this.characterId = data.uid ? +data.uid : 0));
+    this.subscription.add(this.route.params.subscribe((params: any) => {
+      console.log(params)
+      this.characterService.getData(params as CharacterPageParams);
+    }));
+
+    // this.characterService.cahracter$.subscribe((data) => console.log('---', data))
   }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
 
-  public navigate(whichDirection: number) {
+  public navigate(whichDirection: number, charactedId: number) {
 
     this.isLoading = true;
     console.log('1 - updating state');

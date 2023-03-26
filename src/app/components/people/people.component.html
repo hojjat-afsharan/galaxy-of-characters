@@ -1,8 +1,25 @@
-<div *ngFor="let person of people$ | async">
-    <a [routerLink]="['/people', person.uid]" (click)="updateSelectedCharacter(+person.uid)">
-    {{person.uid}} - {{person.name}} - {{person.url}}
-    </a>
+<div class="columns">
+    <div class="column is-four-fifths" *ngFor="let person of people$ | async">
+        <!-- <a [routerLink]="['/people', person.uid]" (click)="updateSelectedCharacter(+person.uid)">
+        {{person.uid}} - {{person.name}} - {{person.url}}
+        </a> -->
+        <div class="card">
+            <a [routerLink]="['/people', person.uid]" (click)="updateSelectedCharacter(+person.uid)">
+            <header class="card-header">
+              <p class="card-header-title">
+                {{person.name}}
+              </p>
+              <button class="card-header-icon" aria-label="more options">
+                <!-- <span class="icon">
+                  <i class="fas fa-angle-down" aria-hidden="true"></i>
+                </span> -->
+              </button>
+            </header>
+        </a>
+          </div>
+    </div>
 </div>
+
 
 <button class="button is-dark pagination-previous" (click)="navigate(-1)" [disabled]="state?.currentPage == 1">Previous</button>
 <button class="button is-dark pagination-next" (click)="navigate(1)" [disabled]="state?.currentPage == state?.totalPages">Next</button>

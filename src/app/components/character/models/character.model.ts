@@ -30,7 +30,7 @@ export class CharacterProperties {
   public skin_color?: string;
   public eye_color?: string;
   public birth_year?: string;
-  public gender?: string;
+  public gender?: Gender;
   public created?: string;
   public edited?: string;
   public name?: string;
@@ -63,4 +63,10 @@ export class CharacterProperties {
     console.log(lastNumber);
     return lastNumber;
   }
+}
+
+export enum Gender {
+  MALE = 'male',
+  FEMALE = 'female',
+  NONE = 'none'
 }
