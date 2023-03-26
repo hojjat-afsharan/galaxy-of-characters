@@ -1,27 +1,41 @@
-# GalaxyOfCharacters
+# Galaxy Of Characters
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.4.
+This Angular project displays a list of characters from the Star Wars franchise, along with their images and descriptions. The project uses the Star Wars API (https://swapi.dev/) to fetch the data and the Bulma library for styling.
 
-## Development server
+## Live Demo
+**You can view a live demo of the project at https://glittering-dango-009396.netlify.app.**
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## How to run project locally
 
-## Code scaffolding
+To run this project locally, follow these steps:
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+1. Clone the repository to your local machine.
+2. Navigate to the project directory.
+3. Install the dependencies by running **npm install**.
+4. Start the development server by running **ng serve**.
+5. Open your browser and navigate to http://localhost:4200/.
 
-## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## Features
 
-## Running unit tests
+* Display a list of Star Wars characters with their images and descriptions.
+* Search for a specific character using the search bar.
+* Click on a character to view more details about them.
+* Paginate through the list of characters.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Technologies used
 
-## Running end-to-end tests
+* Angular
+* TypeScript
+* HTML
+* SCSS
+* Bulma (https://bulma.io/)
+* Star Wars API (https://swapi.dev/)
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+## Acknowledgements
 
-## Further help
+* Star Wars API (https://swapi.dev/)
+* Angular (https://angular.io/)
+* Bulma (https://bulma.io/)
+* Font Awesome (https://fontawesome.com/) for the icons used in the project.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
