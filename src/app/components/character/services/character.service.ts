@@ -1,27 +1,5 @@
 import { Injectable, OnDestroy } from "@angular/core";
-import {
-  ActivatedRoute,
-  ActivatedRouteSnapshot,
-  NavigationEnd,
-  Resolve,
-  Router,
-  RouterStateSnapshot,
-} from "@angular/router";
-import {
-  BehaviorSubject,
-  filter,
-  from,
-  map,
-  Observable,
-  of,
-  pairwise,
-  ReplaySubject,
-  Subject,
-  Subscription,
-  switchMap,
-  tap,
-} from "rxjs";
-import { StateService } from "src/app/shared/state-manager/state.service";
+import { BehaviorSubject, from, map, Observable, of, ReplaySubject, Subject, Subscription, tap } from "rxjs";
 import { Character, CharacterResponse } from "../models/character.model";
 import { CharacterDataService } from "./character-data.service";
 
@@ -33,7 +11,7 @@ export interface CharacterPageParams {
   providedIn: "root",
 })
 export class CharacterService implements OnDestroy {
-  private _character$ = new Subject<Character>();
+  private _character$ = new BehaviorSubject<Character>({});
   public cahracter$ = this._character$.asObservable();
   previousUrl: any;
   private subscription = new Subscription();
@@ -41,11 +19,12 @@ export class CharacterService implements OnDestroy {
   constructor(private characterDataService: CharacterDataService) {}
 
   public getData(params: CharacterPageParams) {
-    this.getCharacter(params.uid).subscribe();
+    this.subscription.add(this.getCharacter(params.uid).subscribe((character) =>
+      this.emitCharacter(character)
+    ));
   }
 
   private emitCharacter(character: Character) {
-    console.log('emiting data', character);
     this._character$.next(character);
   }
 
@@ -53,23 +32,25 @@ export class CharacterService implements OnDestroy {
     const cacheId = "person " + String(uid);
     const cachedResponse = this.checkCachedData(cacheId);
     if (cachedResponse) {
-      return from(
-        [new Character(JSON.parse(cachedResponse) as Character)]
+      return of(new Character(JSON.parse(cachedResponse) as Character)).pipe(
+        tap((item) => console.log(item))
       );
-    } 
-      return this.characterDataService.fetchCharacter(uid).pipe(
-        map((response: CharacterResponse) => new Character(response.result)),
-        tap((data: Character) => {
-          // localStorage.setItem(cacheId, JSON.stringify(data));
-          this.emitCharacter(data);
-        })
-      );
-    
+    }
+    return this.characterDataService.fetchCharacter(uid).pipe(
+      map((response: CharacterResponse) => new Character(response.result)),
+      tap((data: Character) => {
+        localStorage.setItem(cacheId, JSON.stringify(data));
+      })
+    );
   }
 
   checkCachedData(cacheId: string): string | null {
     const cachedResponse = localStorage.getItem(cacheId);
     return cachedResponse;
+  }
+
+  public cleanData() {
+    this._character$.next({});
   }
 
   ngOnDestroy(): void {

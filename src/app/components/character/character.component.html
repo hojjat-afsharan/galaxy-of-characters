@@ -1,6 +1,6 @@
-{{character$ | async | json}}
 <ng-container *ngIf="character$ | async as data">
-  <div>uid: {{ data.uid }}</div>
+  <div *ngIf="data.uid">
+    <div>uid: {{ data.uid }}</div>
   <!-- <div >description: {{ data.description }}</div> -->
   <div>__v: {{ data.__v }}</div>
   <div>_id: {{ data._id }}</div>
@@ -112,6 +112,7 @@
         </footer>
       </div>
     </div>
+  </div>
   </div>
 </ng-container>
 <a [routerLink]="['/planets', (character$ | async)?.properties?.planetNumber]">

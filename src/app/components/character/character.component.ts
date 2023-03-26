@@ -32,10 +32,9 @@ export class CharacterComponent implements OnDestroy {
   public faChevronLeft = faChevronLeft;
   public faChevronRight = faChevronRight;
   public faSeedling = faSeedling;
-
   public characterId = 0;
-
   public GENDER = Gender;
+  car: any;
 
   constructor(private route: ActivatedRoute,
     private router: Router,
@@ -47,19 +46,20 @@ export class CharacterComponent implements OnDestroy {
         this.firstChar = indexOfCurrentChar === 0;
         this.lastChar = state.totalRecords === indexOfCurrentChar;
       }));
+
+      this.subscription.add(this.route.params.subscribe((params: any) => {
+        console.log(params)
+        this.characterService.getData(params as CharacterPageParams);
+      }));
     }
 
   ngOnInit() {
-    this.subscription.add(this.route.params.subscribe((params: any) => {
-      console.log(params)
-      this.characterService.getData(params as CharacterPageParams);
-    }));
-
-    // this.characterService.cahracter$.subscribe((data) => console.log('---', data))
+    
   }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+    this.characterService.cleanData();
   }
 
   public navigate(whichDirection: number, charactedId: number) {
