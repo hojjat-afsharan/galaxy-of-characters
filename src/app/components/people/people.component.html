@@ -1,5 +1,36 @@
-<div *ngFor="let person of people$ | async">
-    <a [routerLink]="['/people', person.uid]">
-    {{person.uid}} - {{person.name}} - {{person.url}}
-    </a>
+<div class="people-container">
+  <div class="container__title">
+    <ng-container *ngIf="breakpoint === breakpointEnum.SM; else bigTitle">
+         The Cantina Crew
+    </ng-container>
+    <ng-template #bigTitle>
+      The Cantina Crew: A Whimsical List of Star Wars Characters
+    </ng-template>
+   
+  </div>
+  <div class="card-container {{ breakpoint }}"> 
+    <div class="card__item" *ngFor="let person of people$ | async;let i = index;">
+      <div (click)="navigateToCharacter(person.uid)"
+      (mouseenter)="howeredItem = i" (mouseleave)="howeredItem = undefined">
+        <header class="card__content">
+          {{ person.name }}
+          <span class="card__icon" [class.visible]="howeredItem === i">
+            <fa-icon
+              [icon]="faAngleRight"
+            ></fa-icon>
+          </span>
+        </header>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="button is-dark pagination-previous" (click)="navigatePreNext(-1)"
+      [disabled]="!currentPage || currentPage == 1">
+      Previous {{ currentPage }}
+    </button>
+    <button class="button is-dark pagination-next" (click)="navigatePreNext(1)" [disabled]="lastPage$ | async">
+      Next {{ currentPage }}
+    </button>
+  </div>
 </div>

@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { State } from './shared/state-manager/models/state.model';
+import { StateService } from './shared/state-manager/state.service';
 
 @Component({
   selector: 'app-root',
@@ -6,6 +8,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent{
-  title = 'galaxy-of-characters';
 
+  public state?: State;
+  title = 'galaxy-of-characters';
+  constructor(private stateService: StateService) {
+  }
 }

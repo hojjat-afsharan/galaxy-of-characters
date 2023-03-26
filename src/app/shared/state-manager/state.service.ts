@@ -1,0 +1,31 @@
+import { Injectable } from '@angular/core';
+import { BehaviorSubject, ReplaySubject } from 'rxjs';
+import { State, STATE_INITIAL_VALUE } from './models/state.model';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class StateService {
+
+  constructor() { }
+
+  private _state$ = new BehaviorSubject<State>(STATE_INITIAL_VALUE);
+  public state$ = this._state$.asObservable();
+
+  public updateState(newState: Partial<State>): void {
+
+    const currentState = this._state$.getValue();
+    console.log('new State', newState, 'old state', currentState);
+    
+    const nextState = {...currentState, ...newState };
+    console.log('updating state', nextState);
+    this._state$.next(nextState);
+  }
+
+  public updateKnownUids(newUids: number[]) {
+    const currentState = this._state$.getValue();
+    currentState.uidList = [...currentState.uidList, ...newUids].sort((a, b) => a > b ? 1:-1);
+    localStorage.setItem('uidList', JSON.stringify(currentState.uidList));
+    const nextState = { ...currentState };
+  }
+}
