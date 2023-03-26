@@ -1,8 +1,8 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, map, catchError, throwError } from 'rxjs';
+import { Observable, catchError, throwError } from 'rxjs';
 import { environment } from "src/environments/environment";
-import { Character, CharacterResponse } from '../models/character.model';
+import { CharacterResponse } from '../models/character.model';
 
 @Injectable({
   providedIn: 'root'
@@ -27,12 +27,5 @@ export class CharacterDataService {
         return throwError(error);
       })
     );
-  }
-  handleHttpError(error: HttpErrorResponse) {
-    // throw new Error('Method not implemented.');
-  }
-
-  ngOnDestroy(): void {
-    // throw new Error('Method not implemented.');
   }
 }

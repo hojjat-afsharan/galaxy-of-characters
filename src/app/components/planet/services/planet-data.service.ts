@@ -2,7 +2,6 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { CharacterResponse } from '../../character/models/character.model';
 import { PlanetResponse } from '../model/planet.model';
 
 @Injectable({
@@ -28,12 +27,5 @@ export class PlanetDataService {
         return throwError(error);
       })
     );
-  }
-  handleHttpError(error: HttpErrorResponse) {
-    // throw new Error('Method not implemented.');
-  }
-
-  ngOnDestroy(): void {
-    // throw new Error('Method not implemented.');
   }
 }

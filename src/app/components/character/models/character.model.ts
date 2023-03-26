@@ -60,7 +60,6 @@ export class CharacterProperties {
     const lastDigits = lastSegment.match(/\d+/);
 
     const lastNumber = parseInt(!!lastDigits ? lastDigits[0] : "1");
-    console.log(lastNumber);
     return lastNumber;
   }
 }

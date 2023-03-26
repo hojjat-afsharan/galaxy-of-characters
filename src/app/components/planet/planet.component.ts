@@ -11,7 +11,6 @@ import { PlanetService } from "./services/planet.service";
 import {
   faRocket,
   faChevronLeft,
-  faR
 } from "@fortawesome/free-solid-svg-icons";
 
 @Component({
@@ -52,7 +51,6 @@ export class PlanetComponent implements OnInit, OnDestroy {
     this.subscription.add(this.responsivenessService.breakpointObservable$.pipe(
       distinctUntilChanged()
     ).subscribe((data) => {
-      console.log(data);
       this.breakpoint = data;
       this.changeDetector.detectChanges()}));
   }
@@ -63,7 +61,6 @@ export class PlanetComponent implements OnInit, OnDestroy {
   }
 
   public navigate() {
-    console.log(this.state?.currentSelectedCharacter);
     this.router.navigate([
       RouteInitial.PEOPLE,
       this.state?.currentSelectedCharacter,

@@ -7,7 +7,7 @@ import { People, PeopleResponse } from '../models/people.model';
 @Injectable({
   providedIn: 'root'
 })
-export class PeopleDataService implements OnDestroy{
+export class PeopleDataService{
   private readonly ENDPOINTS = {
     PEOPLE_LIST_URL: (pageNumber: number, pageLimit: number) =>
       `${environment.starWarsUrl}/people?page=${pageNumber}&limit=${pageLimit}`
@@ -31,12 +31,5 @@ export class PeopleDataService implements OnDestroy{
         return throwError(error);
       })
     );
-  }
-  handleHttpError(error: HttpErrorResponse) {
-    // throw new Error('Method not implemented.');
-  }
-
-  ngOnDestroy(): void {
-    // throw new Error('Method not implemented.');
   }
 }

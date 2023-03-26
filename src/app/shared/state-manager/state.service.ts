@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, ReplaySubject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { State, STATE_INITIAL_VALUE } from './models/state.model';
 
 @Injectable({
@@ -15,10 +15,8 @@ export class StateService {
   public updateState(newState: Partial<State>): void {
 
     const currentState = this._state$.getValue();
-    console.log('new State', newState, 'old state', currentState);
     
     const nextState = {...currentState, ...newState };
-    console.log('updating state', nextState);
     this._state$.next(nextState);
   }
 

@@ -75,7 +75,6 @@ export class CharacterComponent implements OnDestroy, OnInit{
     this.subscription.add(this.responsivenessService.breakpointObservable$.pipe(
       distinctUntilChanged()
     ).subscribe((data) => {
-      console.log(data);
       this.breakpoint = data;
       this.changeDetector.detectChanges()}));
   }
