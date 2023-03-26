@@ -1,6 +1,6 @@
-import { Component, OnDestroy } from "@angular/core";
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { Subscription } from "rxjs";
+import { distinctUntilChanged, Subscription, tap } from "rxjs";
 import {
   CharacterPageParams,
   Gender,
@@ -16,19 +16,21 @@ import {
   faTableList,
   faJedi,
   faHand,
-  faChevronLeft,
-  faChevronRight,
   faSeedling,
+  faChevronLeft,
 } from "@fortawesome/free-solid-svg-icons";
 import { RouteInitial } from "src/app/app-routing.module";
+import { BreakpointEnum, ResponsivenessService } from "src/app/shared/services/responsiveness.service";
 
 @Component({
   selector: "app-character",
   templateUrl: "./character.component.html",
   styleUrls: ["./character.component.scss"],
 })
-export class CharacterComponent implements OnDestroy {
+export class CharacterComponent implements OnDestroy, OnInit{
+
   public character$ = this.characterService.cahracter$;
+
   public state?: State;
   public isLoading = false;
   public subscription = new Subscription();
@@ -40,18 +42,23 @@ export class CharacterComponent implements OnDestroy {
   public faTableList = faTableList;
   public faJedi = faJedi;
   public faHand = faHand;
-  public faChevronLeft = faChevronLeft;
-  public faChevronRight = faChevronRight;
+  public faChevronleft = faChevronLeft;
+ 
   public faSeedling = faSeedling;
   public characterId = 0;
   public GENDER = Gender;
   car: any;
 
+  public breakpointEnum = BreakpointEnum;
+  breakpoint: BreakpointEnum = BreakpointEnum.SM;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private characterService: CharacterService,
-    private stateService: StateService
+    private stateService: StateService,
+    public responsivenessService: ResponsivenessService,
+    private changeDetector: ChangeDetectorRef
   ) {
     this.subscription.add(
       this.stateService.state$.subscribe((state: State) => this.state = state)
@@ -62,6 +69,14 @@ export class CharacterComponent implements OnDestroy {
         this.characterService.getData(params as CharacterPageParams);
       })
     );
+  }
+
+  ngOnInit() {
+    this.subscription.add(this.responsivenessService.breakpointObservable$.pipe(
+      distinctUntilChanged()
+    ).subscribe((data) => {
+      this.breakpoint = data;
+      this.changeDetector.detectChanges()}));
   }
 
   ngOnDestroy(): void {

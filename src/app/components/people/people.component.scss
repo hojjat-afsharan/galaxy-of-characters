@@ -4,7 +4,6 @@
 :host(app-people) {
     padding: 1rem;
     font-size: $default-font-size;
-    width: 50%;
 }
 
 .people-container {
@@ -12,31 +11,39 @@
 
     .container__title {
         color: #5F6468;
+       
 
         &::after {
             content: '';
             display: block;
-            width: 100%;
+            max-width: 600px;
             height: 2px;
             background-color: #959595;
             margin-top: 5px;
         }
+
+        &.md::after {
+            width: 95%;
+        }
+        &.sm::after {
+            width: 100%;
+        }
     }
 
-    .card-container {
+    .card__container {
         .card__item {
             cursor: pointer;
-            width: 50vw;
-            height:5vh;
+            // width: 50vw;
+            height: 5vh;
             overflow: hidden;
             position: relative;
             transition: transform 0.2s ease-in-out;
             font-size: 1.2rem;
-            
+
             &:hover {
                 transform: scale(1.01)
             }
-            
+
             &:first-of-type {
                 margin-top: 1rem;
             }
@@ -46,29 +53,57 @@
             }
 
             .card__content {
-                // padding-left: 1rem;
-                color: #459CDF;
+                display: flex;
+                flex-direction: row;
+
+                color: $link-value-color;
                 font-weight: bold;
 
                 .card__icon {
-                    padding: 10px;
-                    transform: translateY(-50%);
+                    padding-left: 1rem;
                     opacity: 0;
                     transition: all 0.2s ease-in-out;
+                    color: $dark-blue;
 
                     &.visible {
                         opacity: 1;
-                        transform: translateY(-50%) scale(1.2);
-                      }
+                        transform: scale(1.2);
+                    }
                 }
-              }
+            }
         }
 
-        &.md {}
-
         &.sm {
-            background-color: aquamarine;
-            padding: 0 1rem;
+
+            .card__item {
+
+                .card__content .card__icon {
+                    padding-left: .4rem;
+                }
+            }
+
+        }
+    }
+
+    .pagination__main {
+        justify-content: space-between;
+        align-items: center;
+        max-width: 600px;
+
+        .pagination__previous {}
+
+        .pagination__current-page {
+            margin: 0 2rem;
+            color: $normal-value-color;
+            font-weight: bold;
+            font-size: 1.6rem;
+        }
+
+        .pagination__next {}
+
+        &.md, &.sm{
+            justify-content: space-between;
+            
         }
     }
 }

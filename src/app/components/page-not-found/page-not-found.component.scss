@@ -1,0 +1,22 @@
+@import "/src/app/shared/styles/mixins.scss";
+@import "/src/app/shared/styles/variables.scss";
+
+.nav__back {
+    padding-top: 2rem;
+        display: inline;
+        cursor: pointer;
+        color: $link-value-color;
+        font-size: 1rem;
+        transition: font-size 0.2s ease-in-out;
+        display: flex;
+        align-items: center;
+
+        & > span {
+            color: $dark-blue;
+        }
+
+        &:hover {
+            font-size: 1.05rem;
+        }
+    
+}

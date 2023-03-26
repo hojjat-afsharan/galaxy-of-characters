@@ -4,12 +4,13 @@ import { Router } from "@angular/router";
 import { StateService } from "src/app/shared/state-manager/state.service";
 import { State } from "src/app/shared/state-manager/models/state.model";
 import { PeopleService } from "./services/people.service";
-import { delay, distinctUntilChanged, Subscription, tap } from "rxjs";
+import { distinctUntilChanged, Subscription, tap } from "rxjs";
 import { RouteInitial } from "src/app/app-routing.module";
 import { PeoplePageParams } from "./models/people.model";
 import { BreakpointEnum, ResponsivenessService } from "src/app/shared/services/responsiveness.service";
 import {
- faAngleRight
+ faAngleRight, faChevronLeft,
+ faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
 
 @Component({
@@ -20,16 +21,14 @@ import {
 export class PeopleComponent implements OnDestroy {
   public people$ = this.peopleService.people$;
   public lastPage$ = this.peopleService.lastPage$;
-  public breakpoint$ = this.responsivenessService.breakpointObservable$.pipe(
-    distinctUntilChanged(),
-    tap(item => this.changeDetector.detectChanges())
-  );
   public state?: State;
   isLoading = false;
   public currentPage = 1;
 
   public howeredItem: number | undefined;
   public faAngleRight = faAngleRight;
+  public faChevronLeft = faChevronLeft;
+  public faChevronRight = faChevronRight;
 
   private subscription = new Subscription();
   public breakpointEnum = BreakpointEnum;
@@ -59,10 +58,9 @@ export class PeopleComponent implements OnDestroy {
   ngOnInit() {
     this.subscription.add(this.responsivenessService.breakpointObservable$.pipe(
       distinctUntilChanged()
-    ).subscribe((breakpoint) => {
-      this.breakpoint = breakpoint;
-      this.changeDetector.detectChanges()
-    }))
+    ).subscribe((data) => {
+      this.breakpoint = data;
+      this.changeDetector.detectChanges()}));
   }
 
   navigateToCharacter(characterNumber: string) {

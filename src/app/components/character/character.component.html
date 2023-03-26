@@ -1,114 +1,118 @@
 <ng-container *ngIf="character$ | async as data">
-  <div *ngIf="data.uid">
-    <div>uid: {{ data.uid }}</div>
-  <!-- <div >description: {{ data.description }}</div> -->
-  <div>__v: {{ data.__v }}</div>
-  <div>_id: {{ data._id }}</div>
-  <!-- <div> birth_year: {{data.properties?.birth_year}}</div> -->
-  <!-- <div> created: {{data.properties?.created | date: 'medium'}}</div>
-    <div> edited: {{data.properties?.edited | date: 'medium'}}</div> -->
-  <div>
-    eye_color: {{ data.properties?.eye_color }}
-    <span class="icon">
-      <fa-icon
-        class="fa-xl"
-        [icon]="faEye"
-        [ngStyle]="{ color: data.properties?.eye_color }"
-      ></fa-icon>
-    </span>
-  </div>
-  <div>
-    gender: {{ data.properties?.gender }}
-    <span class="icon">
-      <ng-container [ngSwitch]="data.properties?.gender">
-        <fa-icon
-          class="fa-xl"
-          *ngSwitchCase="GENDER.MALE"
-          [icon]="faMars"
-        ></fa-icon>
-        <fa-icon
-          class="fa-xl"
-          *ngSwitchCase="GENDER.FEMALE"
-          [icon]="faVenus"
-        ></fa-icon>
-        <fa-icon
-          class="fa-xl"
-          *ngSwitchCase="GENDER.NONE"
-          [icon]="faVenusMars"
-        ></fa-icon>
-      </ng-container>
-    </span>
-  </div>
-  <div>hair_color: {{ data.properties?.hair_color }}</div>
-  <div>height: {{ data.properties?.height }}</div>
-  <!-- <div> homeworld: {{data.properties?.homeworld}}</div> -->
-  <div>mass: {{ data.properties?.mass }}</div>
-  <!-- <div> name: {{data.properties?.name}}</div> -->
-  <div>planetNumber: {{ data.properties?.planetNumber }}</div>
-  <div>
-    skin_color: {{ data.properties?.skin_color }}
-    <div class="icon" (click)="gotoList()">
-      <fa-icon
-        class="fa-2xl"
-        [icon]="faHand"
-        [ngStyle]="{ color: data.properties?.skin_color }"
-      ></fa-icon>
-    </div>
-  </div>
+  <div class="character-container" *ngIf="data.uid">
 
-  <div class="card">
-    <div class="card-content">
-      <div class="media">
-        <div class="media-left">
-          <figure class="image is-48x48">
-            <div class="icon" (click)="gotoList()">
+    <div class="container__title  text-wrap {{ breakpoint }}">
+      {{ data.description}}
+    </div>
+
+    <div class="card">
+      <div class="card-content">
+        <div class="media">
+          <div class="media-left card__image">
+            <figure class="image is-48x48">
               <fa-icon class="fa-2xl" [icon]="faJedi"></fa-icon>
+
+            </figure>
+          </div>
+          <div class="media-content">
+            <p class="title is-4">{{ data.properties?.name}} 
+            </p>
+            <p class="subtitle is-6">
+              Birth <span>{{ data.properties?.birth_year}}</span>
+            </p>
+          </div>
+        </div>
+
+        <div class="content card__content">
+
+          <div class="card__items">
+            <div class="item__title">Eye color
             </div>
-          </figure>
-        </div>
-        <div class="media-content">
-          <p class="title is-4">{{ data.properties?.name }}</p>
-          <p class="subtitle is-6">
-            birth <span>{{ data.properties?.birth_year }}</span>
-          </p>
-        </div>
-      </div>
-
-      <div class="content">
-        <div>description: {{ data.description }}</div>
-
-        <br />
-        <div>
-          <time>
-            created: {{ data.properties?.created | date : "medium" }}</time
-          >
-          <time> edited: {{ data.properties?.edited | date : "medium" }}</time>
-        </div>
-
-        <footer class="card-footer">
-          <!-- <div class="card-footer-item">
-            <span class="icon" (click)="navigate(-1, data.uid ? +data.uid : 0)">
-              <fa-icon class="fa-2xl" [icon]="faChevronLeft"></fa-icon>
-            </span>
-          </div> -->
-          <div class="card-footer-item">
-            <span class="icon" (click)="gotoList()">
-              <fa-icon class="fa-2xl" [icon]="faTableList"></fa-icon>
-            </span>
+            <div class="item__value text-wrap">{{ data.properties?.eye_color}}</div>
           </div>
-          <div class="card-footer-item">
-            <span class="icon" (click)="gotoPlanet(data.properties?.planetNumber)">
-              <fa-icon class="fa-2xl" [icon]="faSeedling"></fa-icon>
-            </span>
+
+          <div class="card__items">
+            <div class="item__title">Gender
+            </div>
+            <div class="item__value text-wrap">{{ data.properties?.gender}}</div>
           </div>
-          <!-- <div class="card-footer-item">
-            <span class="icon" (click)="navigate(1, data.uid ? +data.uid : 0)">
-              <fa-icon class="fa-2xl" [icon]="faChevronRight"></fa-icon>
-            </span>
-          </div> -->
-        </footer>
+
+          <div class="card__items">
+            <div class="item__title">Hair color
+            </div>
+            <div class="item__value text-wrap">{{ data.properties?.hair_color}}</div>
+          </div>
+
+          <div class="card__items">
+            <div class="item__title">Height
+            </div>
+            <div class="item__value text-wrap">{{ data.properties?.height}} <span class="scale"></span></div>
+          </div>
+
+          <div class="card__items">
+            <div class="item__title">Mass
+            </div>
+            <div class="item__value text-wrap">{{ data.properties?.mass}} <span class="weight"></span></div>
+          </div>
+
+          <div class="card__items">
+            <div class="item__title">Skin color
+            </div>
+            <div class="item__value text-wrap">{{ data.properties?.skin_color}}</div>
+          </div>
+
+          <div class="card__items">
+            <div class="item__title">UID
+            </div>
+            <div class="item__value text-wrap">{{ data.uid}}</div>
+          </div>
+
+          <div class="card__items">
+            <div class="item__title">__v
+            </div>
+            <div class="item__value text-wrap">{{ data.__v}}</div>
+          </div>
+
+          <div class="card__items">
+            <div class="item__title">_id
+            </div>
+            <div class="item__value text-wrap">{{ data._id}}</div>
+          </div>
+
+          <div class="card__items">
+            <div class="item__title">Created
+            </div>
+            <div class="item__value text-wrap">{{ data.properties?.created | date : "medium"}}</div>
+          </div>
+
+          <div class="card__items">
+            <div class="item__title">Edited
+            </div>
+            <div class="item__value text-wrap">{{ data.properties?.edited | date : "medium" }}</div>
+          </div>
+
+        
+          <div class="card__items card__planet {{ breakpoint }}">
+            <div class="item__title">Planet number
+            </div>
+            <div class="item__value planet">{{ data.properties?.planetNumber}}
+              <div class="plane__link" (click)="gotoPlanet(data.properties?.planetNumber)">
+                  Go to planet of {{data.properties?.name}}
+              <span class="icon" >
+                <fa-icon class="fa-xl" [icon]="faSeedling"></fa-icon>
+              </span> 
+              </div>
+            </div>
+          </div>
+        </div>
+        <br>
+        <div class="card__back" (click)="gotoList()">
+          <span class="nav__left-icon" >
+            <fa-icon class="fa-xl icon" [icon]="faChevronleft"></fa-icon>
+          </span> 
+          Back to list
+        </div>
       </div>
     </div>
-  </div>
   </div>
 </ng-container>

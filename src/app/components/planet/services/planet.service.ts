@@ -32,7 +32,6 @@ export class PlanetService {
     }
 
     return this.planetDataService.fetchPlanet(uid).pipe(
-      tap(item => console.log(item)),
       map((response: PlanetResponse) => new Planet(response.result)),
       tap((data: Planet) => localStorage.setItem(cacheId, JSON.stringify(data)))
     );

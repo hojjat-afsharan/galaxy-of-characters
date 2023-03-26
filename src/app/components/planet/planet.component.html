@@ -1,20 +1,114 @@
 <ng-container *ngIf="planet$ | async as data">
-    <div > uid: {{ data.uid }}</div>
-    <div >description: {{ data.description }}</div>
-    <div >__v: {{ data.__v }}</div>
-    <div >_id: {{ data._id }}</div>
-    <div> climate: {{data.properties?.climate}}</div>
-    <div> created: {{data.properties?.created}}</div>
-    <div> diameter: {{data.properties?.diameter}}</div>
-    <div> edited: {{data.properties?.edited}}</div>
-    <div> gravity: {{data.properties?.gravity}}</div>
-    <div> name: {{data.properties?.name}}</div>
-    <div> orbital_period: {{data.properties?.orbital_period}}</div>
-    <div> population: {{data.properties?.population}}</div>
-    <div> rotation_period: {{data.properties?.rotation_period}}</div>
-    <div> surface_water: {{data.properties?.surface_water}}</div>
-    <div> terrain: {{data.properties?.terrain}}</div>
-    <div> url: {{data.properties?.url}}</div>
-  </ng-container>
+  <div class="character-container" *ngIf="data.uid">
 
-<button (click)="navigate()">back to character</button>
+    <div class="container__title  text-wrap {{ breakpoint }}">
+      {{ data.description}}
+    </div>
+
+    <div class="card">
+      <div class="card-content">
+        <div class="media">
+          <div class="media-left card__image">
+            <figure class="image is-48x48">
+              <fa-icon class="fa-2xl" [icon]="faRocket"></fa-icon>
+
+            </figure>
+          </div>
+          <div class="media-content">
+            <p class="title is-4">{{ data.properties?.name}} 
+            </p>
+            <p class="subtitle is-6">
+              Climate <span>{{ data.properties?.climate}}</span>
+            </p>
+          </div>
+        </div>
+
+        <div class="content card__content">
+
+          <div class="card__items">
+            <div class="item__title">Population
+            </div>
+            <div class="item__value text-wrap">{{ data.properties?.population}}</div>
+          </div>
+
+          <div class="card__items">
+            <div class="item__title">Diameter
+            </div>
+            <div class="item__value text-wrap">{{ data.properties?.diameter}}<span class="big-scale"></span></div>
+          </div>
+
+        
+          <div class="card__items">
+            <div class="item__title">Orbital Period
+            </div>
+            <div class="item__value text-wrap">{{ data.properties?.orbital_period}}<span class="time"></span></div>
+          </div>
+
+          <div class="card__items">
+            <div class="item__title">Rotation Period
+            </div>
+            <div class="item__value text-wrap">{{ data.properties?.rotation_period}} <span class="time"></span></div>
+          </div>
+        
+
+          <div class="card__items">
+            <div class="item__title">Gravity
+            </div>
+            <div class="item__value text-wrap">{{ data.properties?.gravity}}</div>
+          </div>
+
+
+
+          <div class="card__items">
+            <div class="item__title">Surface Water
+            </div>
+            <div class="item__value text-wrap">{{ data.properties?.surface_water}}</div>
+          </div>
+
+          <div class="card__items">
+            <div class="item__title">Terrain
+            </div>
+            <div class="item__value text-wrap">{{ data.properties?.terrain}}</div>
+          </div>
+
+          <div class="card__items">
+            <div class="item__title">UID
+            </div>
+            <div class="item__value text-wrap">{{ data.uid}}</div>
+          </div>
+
+          <div class="card__items">
+            <div class="item__title">__v
+            </div>
+            <div class="item__value text-wrap">{{ data.__v}}</div>
+          </div>
+
+          <div class="card__items">
+            <div class="item__title">_id
+            </div>
+            <div class="item__value text-wrap">{{ data._id}}</div>
+          </div>
+
+          <div class="card__items">
+            <div class="item__title">Created
+            </div>
+            <div class="item__value text-wrap">{{ data.properties?.created | date : "medium"}}</div>
+          </div>
+
+          <div class="card__items">
+            <div class="item__title">Edited
+            </div>
+            <div class="item__value text-wrap">{{ data.properties?.edited | date : "medium" }}</div>
+          </div>
+        </div>
+        <br>
+        <div class="card__back" (click)="navigate()">
+          <span class="nav__left-icon" >
+            <fa-icon class="fa-xl icon" [icon]="faChevronLeft"></fa-icon>
+          </span> 
+          Back to Character Info
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>
