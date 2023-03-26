@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnDestroy } from "@angular/core";
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { distinctUntilChanged, Subscription, tap } from "rxjs";
 import {
@@ -27,13 +27,10 @@ import { BreakpointEnum, ResponsivenessService } from "src/app/shared/services/r
   templateUrl: "./character.component.html",
   styleUrls: ["./character.component.scss"],
 })
-export class CharacterComponent implements OnDestroy {
+export class CharacterComponent implements OnDestroy, OnInit{
 
   public character$ = this.characterService.cahracter$;
-  public breakpoint$ = this.responsivenessService.breakpointObservable$.pipe(
-    distinctUntilChanged(),
-    tap(() => this.changeDetector.detectChanges())
-  );
+
   public state?: State;
   public isLoading = false;
   public subscription = new Subscription();
@@ -72,6 +69,15 @@ export class CharacterComponent implements OnDestroy {
         this.characterService.getData(params as CharacterPageParams);
       })
     );
+  }
+
+  ngOnInit() {
+    this.subscription.add(this.responsivenessService.breakpointObservable$.pipe(
+      distinctUntilChanged()
+    ).subscribe((data) => {
+      console.log(data);
+      this.breakpoint = data;
+      this.changeDetector.detectChanges()}));
   }
 
   ngOnDestroy(): void {

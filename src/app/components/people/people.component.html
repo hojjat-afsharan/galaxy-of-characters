@@ -13,7 +13,7 @@
       <div (click)="navigateToCharacter(person.uid)"
       (mouseenter)="howeredItem = i" (mouseleave)="howeredItem = undefined">
         <header class="card__content">
-          <div>
+          <div class="text-wrap">
             {{ person.name }}
           </div>
           <div class="card__icon" [class.visible]="howeredItem === i">
@@ -50,3 +50,4 @@
     </div>
   </div>
 </div>
+

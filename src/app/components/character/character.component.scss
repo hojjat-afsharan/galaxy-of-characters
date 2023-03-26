@@ -32,6 +32,8 @@
     }
 
     .card {
+        max-width: 680px;
+        box-shadow: unset;
         .card-content {
 
             .card__items {
@@ -44,7 +46,7 @@
                     font-size: 1.05rem;
 
                     &::after {
-                        content: ':';
+                        content: '';
                         padding-right: .5rem;
                     }
                 }
@@ -62,31 +64,47 @@
                     }
 
                     .scale::after {
-                        content: 'cm';
+                        content: ' cm';
                     }
 
                     .weight::after {
-                        content: 'kg';
+                        content: ' kg';
                     }
                 }
 
-                .item__value.planet {
-                    display: flex;
+                &.card__planet {
+                
+                    &.sm {
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: flex-start;
+                        align-items: flex-start;
+                    }
 
-                    .plane__link {
-                        padding-left: 1rem;
-                        font-size: .95rem;
-                        color: $link-value-color;
-                        text-decoration: underline;
-                        cursor: pointer;
-                        transition: transform 0.2s ease-in-out;
-
-                        &:hover {
-                            transform: scale(1.01)
+                    .item__value.planet {
+                        display: flex;
+                        font-size: 1.2rem;
+                        font-weight: bold;
+    
+                        .plane__link {
+                            padding-left: 1rem;
+                            font-size: .95rem;
+                            color: $link-value-color;
+                            text-decoration: underline;
+                            cursor: pointer;
+                            transition: transform 0.2s ease-in-out;
+    
+                            &:hover {
+                                transform: scale(1.01)
+                            }
                         }
                     }
                 }
+
+                
             }
+
+            
 
             .card__back {
                 display: inline;

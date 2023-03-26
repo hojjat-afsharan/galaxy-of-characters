@@ -1,7 +1,7 @@
 <ng-container *ngIf="character$ | async as data">
   <div class="character-container" *ngIf="data.uid">
 
-    <div class="container__title {{ breakpoint }}">
+    <div class="container__title  text-wrap {{ breakpoint }}">
       {{ data.description}}
     </div>
 
@@ -28,72 +28,71 @@
           <div class="card__items">
             <div class="item__title">Eye color
             </div>
-            <div class="item__value">{{ data.properties?.eye_color}}</div>
+            <div class="item__value text-wrap">{{ data.properties?.eye_color}}</div>
           </div>
 
           <div class="card__items">
             <div class="item__title">Gender
             </div>
-            <div class="item__value">{{ data.properties?.gender}}</div>
+            <div class="item__value text-wrap">{{ data.properties?.gender}}</div>
           </div>
 
           <div class="card__items">
             <div class="item__title">Hair color
             </div>
-            <div class="item__value">{{ data.properties?.hair_color}}</div>
+            <div class="item__value text-wrap">{{ data.properties?.hair_color}}</div>
           </div>
 
           <div class="card__items">
             <div class="item__title">Height
             </div>
-            <div class="item__value">{{ data.properties?.height}} <span class="scale"></span></div>
+            <div class="item__value text-wrap">{{ data.properties?.height}} <span class="scale"></span></div>
           </div>
 
           <div class="card__items">
             <div class="item__title">Mass
             </div>
-            <div class="item__value">{{ data.properties?.mass}} <span class="weight"></span></div>
+            <div class="item__value text-wrap">{{ data.properties?.mass}} <span class="weight"></span></div>
           </div>
 
           <div class="card__items">
             <div class="item__title">Skin color
             </div>
-            <div class="item__value">{{ data.properties?.skin_color}}</div>
+            <div class="item__value text-wrap">{{ data.properties?.skin_color}}</div>
           </div>
 
           <div class="card__items">
             <div class="item__title">UID
             </div>
-            <div class="item__value">{{ data.uid}}</div>
+            <div class="item__value text-wrap">{{ data.uid}}</div>
           </div>
 
           <div class="card__items">
             <div class="item__title">__v
             </div>
-            <div class="item__value">{{ data.__v}}</div>
+            <div class="item__value text-wrap">{{ data.__v}}</div>
           </div>
 
           <div class="card__items">
             <div class="item__title">_id
             </div>
-            <div class="item__value">{{ data._id}}</div>
+            <div class="item__value text-wrap">{{ data._id}}</div>
           </div>
 
           <div class="card__items">
             <div class="item__title">Created
             </div>
-            <div class="item__value">{{ data.properties?.created | date : "medium"}}</div>
+            <div class="item__value text-wrap">{{ data.properties?.created | date : "medium"}}</div>
           </div>
 
           <div class="card__items">
             <div class="item__title">Edited
             </div>
-            <div class="item__value">{{ data.properties?.edited | date : "medium" }}</div>
+            <div class="item__value text-wrap">{{ data.properties?.edited | date : "medium" }}</div>
           </div>
 
         
-          <br>
-          <div class="card__items">
+          <div class="card__items card__planet {{ breakpoint }}">
             <div class="item__title">Planet number
             </div>
             <div class="item__value planet">{{ data.properties?.planetNumber}}
@@ -105,26 +104,8 @@
               </div>
             </div>
           </div>
-
-          
-
-         
-
-
-
-
-          <!-- <footer class="card-footer">
-            <div class="card-footer-item">
-              <span class="icon" (click)="gotoList()">
-                <fa-icon class="fa-2xl" [icon]="faTableList"></fa-icon>
-              </span>
-            </div>
-           
-          </footer> -->
         </div>
-
         <br>
-
         <div class="card__back" (click)="gotoList()">
           <span class="nav__left-icon" >
             <fa-icon class="fa-xl icon" [icon]="faChevronleft"></fa-icon>
@@ -133,7 +114,5 @@
         </div>
       </div>
     </div>
-
-
   </div>
 </ng-container>

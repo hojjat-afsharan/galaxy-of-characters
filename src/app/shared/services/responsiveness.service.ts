@@ -17,7 +17,7 @@ export class ResponsivenessService implements OnDestroy {
   public breakpointObservable$ = this.breakpoint$.asObservable();
 
   private resizeObserver = new ResizeObserver(entries => {
-    
+
     const contentWidth = entries[0].contentRect.width;
     let breakpoint: BreakpointEnum;
     if (contentWidth < 576) {

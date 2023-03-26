@@ -77,12 +77,6 @@
 
             .card__item {
 
-                .card__content>div {
-                    white-space: nowrap;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                }
-
                 .card__content .card__icon {
                     padding-left: .4rem;
                 }
