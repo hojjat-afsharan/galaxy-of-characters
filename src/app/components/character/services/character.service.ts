@@ -1,19 +1,16 @@
 import { Injectable, OnDestroy } from "@angular/core";
-import { BehaviorSubject, from, map, Observable, of, ReplaySubject, Subject, Subscription, tap } from "rxjs";
-import { Character, CharacterResponse } from "../models/character.model";
+import { BehaviorSubject, map, Observable, of, Subscription, tap } from "rxjs";
+import { Character, CharacterPageParams, CharacterResponse } from "../models/character.model";
 import { CharacterDataService } from "./character-data.service";
-
-export interface CharacterPageParams {
-  uid: number;
-}
 
 @Injectable({
   providedIn: "root",
 })
 export class CharacterService implements OnDestroy {
+
   private _character$ = new BehaviorSubject<Character>({});
   public cahracter$ = this._character$.asObservable();
-  previousUrl: any;
+  
   private subscription = new Subscription();
 
   constructor(private characterDataService: CharacterDataService) {}
@@ -33,7 +30,6 @@ export class CharacterService implements OnDestroy {
     const cachedResponse = this.checkCachedData(cacheId);
     if (cachedResponse) {
       return of(new Character(JSON.parse(cachedResponse) as Character)).pipe(
-        tap((item) => console.log(item))
       );
     }
     return this.characterDataService.fetchCharacter(uid).pipe(

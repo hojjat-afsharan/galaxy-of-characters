@@ -70,3 +70,8 @@ export enum Gender {
   FEMALE = 'female',
   NONE = 'none'
 }
+
+
+export interface CharacterPageParams {
+  uid: number;
+}

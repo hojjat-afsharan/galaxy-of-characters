@@ -86,35 +86,29 @@
         </div>
 
         <footer class="card-footer">
-          <div class="card-footer-item">
+          <!-- <div class="card-footer-item">
             <span class="icon" (click)="navigate(-1, data.uid ? +data.uid : 0)">
               <fa-icon class="fa-2xl" [icon]="faChevronLeft"></fa-icon>
             </span>
-          </div>
+          </div> -->
           <div class="card-footer-item">
             <span class="icon" (click)="gotoList()">
               <fa-icon class="fa-2xl" [icon]="faTableList"></fa-icon>
             </span>
           </div>
           <div class="card-footer-item">
-            <a [routerLink]="['/planets', (character$ | async)?.properties?.planetNumber]">
-                
-                <span class="icon" data-tooltip="go to home world">
-                    <fa-icon class="fa-2xl" [icon]="faSeedling"></fa-icon>
-                  </span></a
-              >
+            <span class="icon" (click)="gotoPlanet(data.properties?.planetNumber)">
+              <fa-icon class="fa-2xl" [icon]="faSeedling"></fa-icon>
+            </span>
           </div>
-          <div class="card-footer-item">
+          <!-- <div class="card-footer-item">
             <span class="icon" (click)="navigate(1, data.uid ? +data.uid : 0)">
               <fa-icon class="fa-2xl" [icon]="faChevronRight"></fa-icon>
             </span>
-          </div>
+          </div> -->
         </footer>
       </div>
     </div>
   </div>
   </div>
 </ng-container>
-<a [routerLink]="['/planets', (character$ | async)?.properties?.planetNumber]">
-  go to {{ (character$ | async)?.properties?.name }} home world</a
->

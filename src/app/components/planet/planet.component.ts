@@ -3,6 +3,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import {  Subscription } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { PreviousRouteService } from 'src/app/shared/services/previous-route.service';
+import { State } from 'src/app/shared/state-manager/models/state.model';
+import { StateService } from 'src/app/shared/state-manager/state.service';
 import { PlanetService } from './services/planet.service';
 
 @Component({
@@ -15,11 +17,17 @@ export class PlanetComponent implements OnInit, OnDestroy {
   previousUrl: string | undefined;
   public planet$ = this.planetService.planet$;
   private subscription = new Subscription();
+  public state?: State;
 
   constructor(private route: ActivatedRoute,
     private router: Router,
     private previousRouteService: PreviousRouteService,
-    private planetService: PlanetService) {
+    private planetService: PlanetService,
+    private stateService: StateService) {
+
+      this.subscription.add(this.stateService.state$
+        .subscribe((state: State) => this.state = state
+      ));
   }
 
   ngOnInit() {
@@ -34,6 +42,7 @@ export class PlanetComponent implements OnInit, OnDestroy {
   }
 
   public navigate() {
-    this.router.navigate([this.previousUrl]);
+    console.log(this.state?.currentSelectedCharacter);
+    this.router.navigate(['/people', this.state?.currentSelectedCharacter]);
   }
 }

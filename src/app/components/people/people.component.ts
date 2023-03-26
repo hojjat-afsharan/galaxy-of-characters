@@ -44,8 +44,7 @@ export class PeopleComponent implements OnDestroy {
     });
 
     this.router.navigate([], { 
-      queryParams: {page: this.state?.currentPage, limit: this.state?.itemsLimit},
-      relativeTo: this.route,
+      queryParams: {page: this.state?.currentPage, limit: this.state?.itemsLimit}
       })
       .finally(() => this.isLoading = false);
 
