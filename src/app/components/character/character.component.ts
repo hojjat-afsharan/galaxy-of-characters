@@ -16,8 +16,6 @@ import {
   faTableList,
   faJedi,
   faHand,
-  faChevronLeft,
-  faChevronRight,
   faSeedling,
 } from "@fortawesome/free-solid-svg-icons";
 import { RouteInitial } from "src/app/app-routing.module";
@@ -40,8 +38,7 @@ export class CharacterComponent implements OnDestroy {
   public faTableList = faTableList;
   public faJedi = faJedi;
   public faHand = faHand;
-  public faChevronLeft = faChevronLeft;
-  public faChevronRight = faChevronRight;
+ 
   public faSeedling = faSeedling;
   public characterId = 0;
   public GENDER = Gender;

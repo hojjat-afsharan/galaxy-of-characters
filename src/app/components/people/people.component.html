@@ -1,5 +1,5 @@
 <div class="people-container">
-  <div class="container__title">
+  <div class="container__title {{ breakpoint }}">
     <ng-container *ngIf="breakpoint === breakpointEnum.SM; else bigTitle">
          The Cantina Crew
     </ng-container>
@@ -8,29 +8,45 @@
     </ng-template>
    
   </div>
-  <div class="card-container {{ breakpoint }}"> 
+  <div class="card__container {{ breakpoint }}"> 
     <div class="card__item" *ngFor="let person of people$ | async;let i = index;">
       <div (click)="navigateToCharacter(person.uid)"
       (mouseenter)="howeredItem = i" (mouseleave)="howeredItem = undefined">
         <header class="card__content">
-          {{ person.name }}
-          <span class="card__icon" [class.visible]="howeredItem === i">
+          <div>
+            {{ person.name }}
+          </div>
+          <div class="card__icon" [class.visible]="howeredItem === i">
             <fa-icon
               [icon]="faAngleRight"
             ></fa-icon>
-          </span>
+      
+          </div>
+         
+          
         </header>
       </div>
     </div>
   </div>
 
-  <div class="nav-buttons">
-    <button class="button is-dark pagination-previous" (click)="navigatePreNext(-1)"
+  <div class="pagination__main fx-row {{ breakpoint }}">
+    <div class="pagination__previous">
+      <button class="button is-dark" (click)="navigatePreNext(-1)"
       [disabled]="!currentPage || currentPage == 1">
-      Previous {{ currentPage }}
+      <span class="nav__left-icon">
+        <fa-icon class="fa-xl" [icon]="faChevronLeft"></fa-icon>
+      </span> 
     </button>
-    <button class="button is-dark pagination-next" (click)="navigatePreNext(1)" [disabled]="lastPage$ | async">
-      Next {{ currentPage }}
+    </div>
+    <div class="pagination__current-page">
+      {{ currentPage }}
+    </div>
+    <div class="pagination__next">
+      <button class="button is-dark" (click)="navigatePreNext(1)" [disabled]="lastPage$ | async">
+        <span class="nav__right-icon">
+          <fa-icon class="fa-xl" [icon]="faChevronRight"></fa-icon>
+        </span> 
     </button>
+    </div>
   </div>
 </div>

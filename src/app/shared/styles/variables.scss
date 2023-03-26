@@ -5,3 +5,8 @@ $default-font-size: 1.2rem;
 $default-border-color: gray;
 
 $character-name-color: rgb(78, 155, 191);
+
+.fx-row {
+    display: flex;
+    flex-direction: row;
+}

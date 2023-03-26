@@ -9,7 +9,8 @@ import { RouteInitial } from "src/app/app-routing.module";
 import { PeoplePageParams } from "./models/people.model";
 import { BreakpointEnum, ResponsivenessService } from "src/app/shared/services/responsiveness.service";
 import {
- faAngleRight
+ faAngleRight, faChevronLeft,
+ faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
 
 @Component({
@@ -30,6 +31,8 @@ export class PeopleComponent implements OnDestroy {
 
   public howeredItem: number | undefined;
   public faAngleRight = faAngleRight;
+  public faChevronLeft = faChevronLeft;
+  public faChevronRight = faChevronRight;
 
   private subscription = new Subscription();
   public breakpointEnum = BreakpointEnum;
