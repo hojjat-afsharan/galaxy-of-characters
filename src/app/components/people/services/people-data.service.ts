@@ -28,7 +28,7 @@ export class PeopleDataService{
     return request.pipe(
       catchError((error: HttpErrorResponse) => {
         // TODO: raise notification error in correspounding service (something like UserNotificationServer)
-        return throwError(error);
+        return throwError(() => error);
       })
     );
   }
