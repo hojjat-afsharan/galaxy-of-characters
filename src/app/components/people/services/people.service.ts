@@ -39,6 +39,10 @@ export class PeopleService implements OnDestroy {
   ) {
   }
 
+  public getPeopleDataService(): PeopleDataService {
+    return this.peopleDataService;
+  }
+
   public getData(params: PeoplePageParams) {
           this.getPeople(params.page, params.limit)
             .subscribe((people: People[]) => this._people$.next(people));
@@ -95,7 +99,7 @@ export class PeopleService implements OnDestroy {
     return cachedResponse;
   }
 
-  private updatePeopleState(
+  public updatePeopleState(
     response: PeopleResponse,
     pageNumber: number,
     pageLimit: number

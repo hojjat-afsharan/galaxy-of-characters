@@ -1,16 +1,19 @@
-import { TestBed } from '@angular/core/testing';
-
-import { PeopleService } from './people.service';
+import { PeopleService } from "./people.service";
+import { describe, test, beforeEach, expect} from '@jest/globals';
 
 describe('PeopleService', () => {
-  let service: PeopleService;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(PeopleService);
-  });
+    let service: PeopleService;
+    let stateServiceMocked: any;
+    let dataService: any;
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
-  });
-});
+    beforeEach(() => {
+        stateServiceMocked = {};
+        dataService = {};
+        service = new PeopleService(stateServiceMocked, dataService);
+    });  
+
+    test('should create', () => {
+        expect(service).toBeDefined();
+    })
+})
