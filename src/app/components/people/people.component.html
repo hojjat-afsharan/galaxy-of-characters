@@ -31,7 +31,7 @@
 
   <div class="pagination__main fx-row {{ breakpoint }}">
     <div class="pagination__previous">
-      <button class="button is-dark" (click)="navigatePreNext(-1)"
+      <button class="pagination__previous-button button is-dark" (click)="navigatePreNext(-1)"
       [disabled]="!currentPage || currentPage == 1">
       <span class="nav__left-icon">
         <fa-icon class="fa-xl" [icon]="faChevronLeft"></fa-icon>
