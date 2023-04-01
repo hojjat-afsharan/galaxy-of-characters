@@ -16,11 +16,13 @@
     "modulePaths": [
       "<rootDir>"
     ],
-    "setupFilesAfterEnv": ["<rootDir>/src/setupJest.ts"],
+    "setupFilesAfterEnv": [
+      "<rootDir>/src/setupJest.ts"
+    ],
     "moduleDirectories": [
       "node_modules",
       "src"
-  ]
+    ]
   },
   "private": true,
   "dependencies": {
@@ -49,6 +51,7 @@
     "@angular/cli": "~15.2.4",
     "@angular/compiler-cli": "^15.2.0",
     "@creativebulma/bulma-tooltip": "^1.2.0",
+    "cypress": "^12.9.0",
     "typescript": "~4.9.4"
   }
 }

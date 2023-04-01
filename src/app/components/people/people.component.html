@@ -42,7 +42,7 @@
       {{ currentPage }}
     </div>
     <div class="pagination__next">
-      <button class="button is-dark" (click)="navigatePreNext(1)" [disabled]="lastPage$ | async">
+      <button class="pagination__next-button button is-dark" (click)="navigatePreNext(1)" [disabled]="lastPage$ | async">
         <span class="nav__right-icon">
           <fa-icon class="fa-xl" [icon]="faChevronRight"></fa-icon>
         </span> 
