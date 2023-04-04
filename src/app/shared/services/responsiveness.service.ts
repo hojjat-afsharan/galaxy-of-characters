@@ -1,5 +1,5 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { BehaviorSubject, Observable, ReplaySubject, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 
 export enum BreakpointEnum {
   SM = 'sm',

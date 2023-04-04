@@ -9,7 +9,7 @@
    
   </div>
   <div class="card__container {{ breakpoint }}"> 
-    <div class="card__item" *ngFor="let person of people$ | async;let i = index;">
+    <div class="card__item" *ngFor="let person of people$ | async;let i = index; trackBy: trackByFn">
       <div (click)="navigateToCharacter(person.uid)"
       (mouseenter)="howeredItem = i" (mouseleave)="howeredItem = undefined">
         <header class="card__content">
@@ -31,7 +31,7 @@
 
   <div class="pagination__main fx-row {{ breakpoint }}">
     <div class="pagination__previous">
-      <button class="button is-dark" (click)="navigatePreNext(-1)"
+      <button class="pagination__previous-button button is-dark" (click)="navigatePreNext(-1)"
       [disabled]="!currentPage || currentPage == 1">
       <span class="nav__left-icon">
         <fa-icon class="fa-xl" [icon]="faChevronLeft"></fa-icon>
@@ -42,7 +42,7 @@
       {{ currentPage }}
     </div>
     <div class="pagination__next">
-      <button class="button is-dark" (click)="navigatePreNext(1)" [disabled]="lastPage$ | async">
+      <button class="pagination__next-button button is-dark" (click)="navigatePreNext(1)" [disabled]="lastPage$ | async">
         <span class="nav__right-icon">
           <fa-icon class="fa-xl" [icon]="faChevronRight"></fa-icon>
         </span> 

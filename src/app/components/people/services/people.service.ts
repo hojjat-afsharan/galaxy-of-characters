@@ -6,7 +6,6 @@ import {
   Observable,
   of,
   Subscription,
-  switchMap,
   tap,
 } from "rxjs";
 import {
@@ -37,6 +36,10 @@ export class PeopleService implements OnDestroy {
     private stateService: StateService,
     private peopleDataService: PeopleDataService,
   ) {
+  }
+
+  public getPeopleDataService(): PeopleDataService {
+    return this.peopleDataService;
   }
 
   public getData(params: PeoplePageParams) {
@@ -95,7 +98,7 @@ export class PeopleService implements OnDestroy {
     return cachedResponse;
   }
 
-  private updatePeopleState(
+  public updatePeopleState(
     response: PeopleResponse,
     pageNumber: number,
     pageLimit: number

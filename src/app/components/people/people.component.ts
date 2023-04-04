@@ -6,7 +6,7 @@ import { State } from "src/app/shared/state-manager/models/state.model";
 import { PeopleService } from "./services/people.service";
 import { distinctUntilChanged, Subscription, tap } from "rxjs";
 import { RouteInitial } from "src/app/app-routing.module";
-import { PeoplePageParams } from "./models/people.model";
+import { People, PeoplePageParams } from "./models/people.model";
 import { BreakpointEnum, ResponsivenessService } from "src/app/shared/services/responsiveness.service";
 import {
  faAngleRight, faChevronLeft,
@@ -16,9 +16,11 @@ import {
 @Component({
   selector: "app-people",
   templateUrl: "./people.component.html",
-  styleUrls: ["./people.component.scss"]
+  styleUrls: ["./people.component.scss"],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PeopleComponent implements OnDestroy {
+
   public people$ = this.peopleService.people$;
   public lastPage$ = this.peopleService.lastPage$;
   public state?: State;
@@ -93,5 +95,9 @@ export class PeopleComponent implements OnDestroy {
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
     this.peopleService.cleanData();
+  }
+
+  trackByFn(index: number, item: People) {
+    return item.uid;
   }
 }
