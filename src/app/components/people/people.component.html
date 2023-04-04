@@ -9,7 +9,7 @@
    
   </div>
   <div class="card__container {{ breakpoint }}"> 
-    <div class="card__item" *ngFor="let person of people$ | async;let i = index;">
+    <div class="card__item" *ngFor="let person of people$ | async;let i = index; trackBy: trackByFn">
       <div (click)="navigateToCharacter(person.uid)"
       (mouseenter)="howeredItem = i" (mouseleave)="howeredItem = undefined">
         <header class="card__content">
